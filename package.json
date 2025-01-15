@@ -1,0 +1,44 @@
+{
+  "name": "leetify",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "app/**/*.{html,md,js,css,jsx,ts,tsx,json,yml}": [
+      "prettier --write",
+      "eslint --cache --fix"
+    ],
+    "{package.json,eslint.config.mjs,.prettierrc,tsconfig.json,tailwind.config.ts,postcss.config.mjs,next.config.ts}": [
+      "prettier --write",
+      "eslint --cache --fix"
+    ]
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "15.1.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.4",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.3.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9"
+  }
+}

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Prevent pushing to main
+
+current_branch=`git symbolic-ref HEAD`
+current_origin=`git remote`
+if [ current_origin = "origin" -o "$current_branch" = "refs/heads/main" ]
+then
+    cat <<EOT
+--------------------------------------------------------------------------------------
+It is not safe to push/commit directly to the main branch.
+Push your changes from a new branch and raise a PR to get it merged.
+--------------------------------------------------------------------------------------
+EOT
+    echo "";
+    exit 1;
+fi
+
+# Run ESlint and Prettier on modified files
+
+git fetch origin main 2> /dev/null
+git diff-tree --diff-filter=a -r --no-commit-id --name-only HEAD remotes/origin/main | grep --color=none -i -e "\.js$" -e "\.jsx$"| awk '!/.eslintrc.js/ {print}' | xargs npx eslint --no-error-on-unmatched-pattern
