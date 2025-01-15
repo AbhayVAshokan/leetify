@@ -2,15 +2,14 @@ import { columns, Problem } from "./constants";
 import Table from "./table";
 
 async function getData(): Promise<Problem[]> {
-  return [
-    {
-      id: "728ed52f",
-      favorite: true,
-      title: "Two Sum",
-      difficulty: "Easy",
-      tags: ["Array", "Sum"],
-    },
-  ];
+  return Array.from(Array(50)).map(() => ({
+    id: "728ed52f",
+    favorite: true,
+    title: "Two Sum",
+    difficulty: "Easy",
+    tags: ["Array", "Sum"],
+    date: new Date().toLocaleDateString(),
+  }));
 }
 
 export default async function DemoPage() {

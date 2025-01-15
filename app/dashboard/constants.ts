@@ -6,6 +6,7 @@ export type Problem = {
   title: string;
   difficulty: "Easy" | "Medium" | "Hard";
   tags: string[];
+  date: string;
 };
 
 export const columns: ColumnDef<Problem>[] = [
@@ -24,5 +25,9 @@ export const columns: ColumnDef<Problem>[] = [
   {
     accessorKey: "tags",
     header: "Tags",
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
   },
 ];
