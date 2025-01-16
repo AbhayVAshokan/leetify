@@ -35,10 +35,7 @@ const Pagination = <TData,>({ table }: PaginationProps<TData>) => {
           <p className="text-sm font-medium">Rows per page</p>
           <Select
             value={`${pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
-              localStorage.setItem("pageSize", value);
-            }}
+            onValueChange={(value) => table.setPageSize(Number(value))}
           >
             <SelectTrigger className="h-8 w-[70px]">
               <SelectValue placeholder={pageSize} />

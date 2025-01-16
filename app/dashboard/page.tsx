@@ -8,11 +8,11 @@ async function getData(): Promise<Problem[]> {
     title: "Two Sum",
     difficulty: "Easy",
     tags: ["Array", "Sum"],
-    date: new Date().toLocaleDateString(),
+    date: "15 Aug, 2021",
   }));
 }
 
-export default async function DemoPage() {
+const Dashboard = async () => {
   const data = await getData();
 
   return (
@@ -20,4 +20,6 @@ export default async function DemoPage() {
       <Table columns={columns} data={data} />
     </div>
   );
-}
+};
+
+export default Dashboard;

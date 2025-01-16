@@ -33,11 +33,6 @@ const DataTable = <TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: {
-        pageSize: parseInt(localStorage.getItem("pageSize") || "") || 10,
-      },
-    },
   });
 
   return (
