@@ -19,6 +19,8 @@ import {
 import Pagination from "@/components/ui/table/pagination";
 import ColumnToggle from "@/components/ui/table/column-toggle";
 
+import UserSelect from "./user-select";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -33,11 +35,15 @@ const DataTable = <TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    initialState: { pagination: { pageSize: 15 } },
   });
 
   return (
     <div className="space-y-4">
-      <ColumnToggle table={table} />
+      <div className="flex justify-between">
+        <UserSelect />
+        <ColumnToggle table={table} />
+      </div>
       <div className="space-y-4">
         <div className="rounded-md border">
           <Table>
