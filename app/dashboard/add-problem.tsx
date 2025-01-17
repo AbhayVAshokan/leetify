@@ -25,14 +25,17 @@ type ProblemType = {
 
 const problems: ProblemType[] = Array.from(Array(30)).map((_, index) => ({
   id: index.toString(),
-  title: `Problem title some really really long name that does not fit here more length ${index}`,
+  title: `Problem title ${index}`,
   difficulty: ["Easy", "Medium", "Hard"][Math.floor(Math.random() * 3)],
   url: "https://leetcode.com/problems/two-sum",
+  favorite: [true, false][Math.floor(Math.random() * 2)],
 }));
 
 const Item = ({ problem }: { problem: ProblemType }) => (
   <div className="grid grid-cols-12 items-center gap-4 px-2">
-    <p className="col-span-9 truncate sm:col-span-10">{problem.title}</p>
+    <p className="col-span-9 truncate text-left sm:col-span-10">
+      {problem.title}
+    </p>
     <Badge
       variant="outline"
       className="col-span-3 m-auto self-center sm:col-span-2"

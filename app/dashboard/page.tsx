@@ -4,16 +4,11 @@ import Table from "./table";
 async function getData(): Promise<Problem[]> {
   return Array.from(Array(50)).map(() => ({
     id: "728ed52f",
-    favorite: true,
-    title: "Longest Substring Without Repeating Characters",
-    difficulty: "Easy",
-    topics: [
-      "Array",
-      "Hash Table",
-      "String",
-      "Sliding Window",
-      "Dynamic Programming",
-    ],
+    favorite: [true, false][Math.floor(Math.random() * 2)],
+    title: "Longest increasing subsequence",
+    difficulty: ["Easy", "Medium", "Hard"][Math.floor(Math.random() * 3)],
+    url: "https://leetcode.com/problems/two-sum",
+    topics: ["Array", "Hash Table", "String"],
     date: "15 Aug, 2021",
   }));
 }
