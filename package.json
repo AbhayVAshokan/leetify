@@ -10,21 +10,35 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "app/**/*.{html,md,js,css,jsx,ts,tsx,json,yml}": [
+    "{app,components}/**/*.{html,md,js,css,jsx,ts,tsx,json,yml}": [
       "prettier --write",
       "eslint --cache --fix"
     ],
-    "{package.json,eslint.config.mjs,.prettierrc,tsconfig.json,tailwind.config.ts,postcss.config.mjs,next.config.ts}": [
+    "{package.json,eslint.config.mjs,.prettierrc,tsconfig.json,postcss.config.mjs,next.config.ts}": [
       "prettier --write",
       "eslint --cache --fix"
     ]
   },
   "dependencies": {
+    "@radix-ui/react-avatar": "^1.1.2",
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-dropdown-menu": "^2.1.4",
+    "@radix-ui/react-popover": "^1.1.4",
+    "@radix-ui/react-select": "^2.1.4",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@tanstack/react-table": "^8.20.6",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "1.0.0",
+    "lucide-react": "^0.471.1",
+    "next": "15.1.4",
+    "next-themes": "^0.4.4",
+    "postcss": "^8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.4",
-    "postcss": "^8",
+    "tailwind-merge": "^2.6.0",
     "tailwindcss": "^3.4.1",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"
   },
   "devDependencies": {

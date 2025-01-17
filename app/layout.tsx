@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Style_Script } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import ThemeSwitcher from "@/components/theme/theme-switcher";
+import clsx from "clsx";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const styleScript = Style_Script({
+  weight: "400",
+  variable: "--font-style-script",
   subsets: ["latin"],
 });
 
@@ -18,9 +27,25 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} antialiased`}>{children}</body>
-    </html>
+    <>
+      <html lang="en" suppressHydrationWarning>
+        <head />
+        <body className={clsx(inter.className, "px-4 antialiased")}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <header className="container m-auto flex items-center justify-between py-4 text-center text-4xl">
+              <h1 className={styleScript.className}>leetify</h1>
+              <ThemeSwitcher />
+            </header>
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </>
   );
 };
 
