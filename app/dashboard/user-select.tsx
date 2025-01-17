@@ -49,7 +49,7 @@ const UserSelect = () => {
     <Select
       value={selectedUser.id}
       onValueChange={(id) =>
-        setSelectedUser(users.find((user) => user.id === id))
+        setSelectedUser(users.find((user) => user.id === id) || users[0])
       }
     >
       <SelectTrigger className="h-8 w-52">

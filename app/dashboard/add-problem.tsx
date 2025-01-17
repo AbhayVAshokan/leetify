@@ -56,7 +56,11 @@ const AddProblem = () => {
             className="w-[min(425px,90vw)] items-center justify-between"
           >
             {problem ? (
-              <Item problem={problems.find(({ title }) => title === problem)} />
+              <Item
+                problem={
+                  problems.find(({ title }) => title === problem) || problems[0]
+                }
+              />
             ) : (
               <p className="px-2 text-muted-foreground">Add new problem</p>
             )}
@@ -79,7 +83,7 @@ const AddProblem = () => {
                     key={problem.id}
                     value={problem.title}
                     onSelect={(currentValue) => {
-                      setProblem(currentValue === problem ? "" : currentValue);
+                      setProblem(currentValue);
                       setIsOpen(false);
                     }}
                   >

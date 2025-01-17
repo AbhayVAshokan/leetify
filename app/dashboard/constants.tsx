@@ -20,7 +20,7 @@ export type Problem = {
   favorite: boolean;
   title: string;
   url: string;
-  difficulty: "Easy" | "Medium" | "Hard";
+  difficulty: string;
   topics: string[];
   date: string;
 };
@@ -57,18 +57,19 @@ export const columns: ColumnDef<Problem>[] = [
   {
     accessorKey: "topics",
     header: ({ column }) => <ColumnHeader column={column} title="Topcs" />,
-    cell: ({ row }) => (
-      <div className="flex min-w-52 max-w-96 flex-wrap gap-1">
-        <p className="block w-full md:hidden">
-          {row.getValue("topics").join(", ")}
-        </p>
-        {row.getValue("topics").map((topic) => (
-          <Badge key={topic} variant="outline" className="hidden md:block">
-            {topic}
-          </Badge>
-        ))}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const topics = row.getValue("topics") as string[];
+      return (
+        <div className="flex min-w-52 max-w-96 flex-wrap gap-1">
+          <p className="block w-full md:hidden">{topics.join(", ")}</p>
+          {topics.map((topic: string) => (
+            <Badge key={topic} variant="outline" className="hidden md:block">
+              {topic}
+            </Badge>
+          ))}
+        </div>
+      );
+    },
     enableSorting: false,
   },
   {

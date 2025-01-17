@@ -13,6 +13,7 @@ const inter = Inter({
 const styleScript = Style_Script({
   weight: "400",
   variable: "--font-style-script",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
