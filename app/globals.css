@@ -64,3 +64,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .select-width-override {
+    max-width: min(600px, 90vw);
+
+    button {
+      text-align: left;
+    }
+
+    button span {
+      width: 100%;
+    }
+  }
+}

@@ -5,9 +5,15 @@ async function getData(): Promise<Problem[]> {
   return Array.from(Array(50)).map(() => ({
     id: "728ed52f",
     favorite: true,
-    title: "Two Sum",
+    title: "Longest Substring Without Repeating Characters",
     difficulty: "Easy",
-    tags: ["Array", "Sum"],
+    topics: [
+      "Array",
+      "Hash Table",
+      "String",
+      "Sliding Window",
+      "Dynamic Programming",
+    ],
     date: "15 Aug, 2021",
   }));
 }

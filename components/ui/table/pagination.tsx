@@ -26,7 +26,7 @@ const Pagination = <TData,>({ table }: PaginationProps<TData>) => {
 
   return (
     <div className="flex items-center justify-between px-2">
-      <div className="flex-1 text-sm text-muted-foreground">
+      <div className="hidden flex-1 text-sm text-muted-foreground md:block">
         Showing {rowStart} to {rowEnd} of{" "}
         {table.getFilteredRowModel().rows.length} rows.
       </div>
@@ -40,7 +40,7 @@ const Pagination = <TData,>({ table }: PaginationProps<TData>) => {
             <SelectTrigger className="h-8 w-[70px]">
               <SelectValue placeholder={pageSize} />
             </SelectTrigger>
-            <SelectContent side="top">
+            <SelectContent>
               {[10, 15, 20, 30, 40, 50].map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
                   {pageSize}

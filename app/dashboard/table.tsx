@@ -19,6 +19,7 @@ import {
 import Pagination from "@/components/ui/table/pagination";
 import ColumnToggle from "@/components/ui/table/column-toggle";
 
+import AddProblem from "./add-problem";
 import UserSelect from "./user-select";
 
 interface DataTableProps<TData, TValue> {
@@ -35,14 +36,17 @@ const DataTable = <TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: { pagination: { pageSize: 15 } },
+    initialState: { pagination: { pageSize: 10 } },
   });
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between">
-        <UserSelect />
-        <ColumnToggle table={table} />
+      <div className="flex flex-wrap-reverse items-center justify-between gap-2 md:flex-nowrap">
+        <AddProblem />
+        <div className="flex gap-2">
+          <UserSelect />
+          <ColumnToggle table={table} />
+        </div>
       </div>
       <div className="space-y-4">
         <div className="rounded-md border">

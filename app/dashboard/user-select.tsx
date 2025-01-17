@@ -55,7 +55,7 @@ const UserSelect = () => {
       <SelectTrigger className="h-8 w-52">
         <SelectValue placeholder={<Item user={selectedUser} />} />
       </SelectTrigger>
-      <SelectContent side="top">
+      <SelectContent>
         {users.map((user) => (
           <SelectItem key={user.id} value={user.id}>
             <Item user={user} />

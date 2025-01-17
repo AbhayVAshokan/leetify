@@ -10,7 +10,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "app/**/*.{html,md,js,css,jsx,ts,tsx,json,yml}": [
+    "{app,components}/**/*.{html,md,js,css,jsx,ts,tsx,json,yml}": [
       "prettier --write",
       "eslint --cache --fix"
     ],
