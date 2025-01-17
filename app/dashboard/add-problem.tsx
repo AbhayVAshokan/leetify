@@ -32,14 +32,11 @@ const problems: ProblemType[] = Array.from(Array(30)).map((_, index) => ({
 }));
 
 const Item = ({ problem }: { problem: ProblemType }) => (
-  <div className="grid grid-cols-12 items-center gap-4 px-2">
+  <div className="mr-4 grid grid-cols-12 items-center gap-4 px-2">
     <p className="col-span-9 truncate text-left sm:col-span-10">
       {problem.title}
     </p>
-    <Badge
-      variant="outline"
-      className="col-span-3 m-auto self-center sm:col-span-2"
-    >
+    <Badge variant="outline" className="mr-auto self-center">
       {problem.difficulty}
     </Badge>
   </div>
@@ -47,44 +44,43 @@ const Item = ({ problem }: { problem: ProblemType }) => (
 
 const AddProblem = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [problemId, setProblemId] = useState("");
+  const [problem, setProblem] = useState("");
 
   return (
-    <div className="flex w-full gap-2">
+    <div className="flex w-full items-center gap-2">
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
-            className="w-full max-w-[min(500px,90vw)] items-center justify-between"
+            className="w-[min(425px,90vw)] items-center justify-between"
           >
-            {problemId ? (
-              <Item problem={problems.find(({ id }) => id === problemId)} />
+            {problem ? (
+              <Item problem={problems.find(({ title }) => title === problem)} />
             ) : (
               <p className="px-2 text-muted-foreground">Add new problem</p>
             )}
             <ChevronDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="ml-4 w-full max-w-[min(500px,90vw)] p-0 md:ml-0">
+        <PopoverContent className="ml-4 w-[min(425px,90vw)] p-0 md:ml-0">
           <Command>
             <CommandInput
               placeholder="Search for a problem..."
               className="h-9"
             />
             <CommandList>
-              <CommandEmpty>No problems found</CommandEmpty>
+              <CommandEmpty className="w-[min(425px,90vw)]">
+                No problems found
+              </CommandEmpty>
               <CommandGroup>
                 {problems.map((problem) => (
                   <CommandItem
                     key={problem.id}
-                    value={problem.id}
+                    value={problem.title}
                     onSelect={(currentValue) => {
-                      setProblemId(
-                        currentValue === problemId ? "" : currentValue,
-                      );
+                      setProblem(currentValue === problem ? "" : currentValue);
                       setIsOpen(false);
-                      setSearchTerm("");
                     }}
                   >
                     <Item problem={problem} />
@@ -95,9 +91,7 @@ const AddProblem = () => {
           </Command>
         </PopoverContent>
       </Popover>
-      <Button size="sm" disabled={!problemId}>
-        Submit
-      </Button>
+      <Button disabled={!problem}>Submit</Button>
     </div>
   );
 };
