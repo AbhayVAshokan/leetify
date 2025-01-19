@@ -1,0 +1,36 @@
+import axios from "axios";
+
+import { columns, Problem, User } from "./constants";
+import Table from "./table";
+
+async function getUsers(): Promise<User[]> {
+  const response = await axios.get("http://localhost:3000/api/users");
+
+  return response.data;
+}
+
+async function getProblems(userId: string): Promise<Problem[]> {
+  const response = await axios.get(
+    `http://localhost:3000/api/users/${userId}/problems`,
+  );
+
+  return response.data;
+}
+
+const Dashboard = async ({
+  params,
+}: {
+  params: Promise<{ userId: string }>;
+}) => {
+  const { userId } = await params;
+  const users = await getUsers();
+  const problems = await getProblems(userId);
+
+  return (
+    <div className="container mx-auto py-4">
+      <Table columns={columns} problems={problems} users={users} />
+    </div>
+  );
+};
+
+export default Dashboard;
