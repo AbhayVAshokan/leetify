@@ -21,11 +21,11 @@ import ColumnToggle from "@/components/ui/table/column-toggle";
 
 import AddProblem from "./add-problem";
 import UserSelect from "./user-select";
-import { Problem, User } from "./constants";
+import { User } from "./constants";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  problems: Problem[];
+  problems: TData[];
   users: User[];
 }
 
