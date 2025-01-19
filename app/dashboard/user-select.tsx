@@ -7,27 +7,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { useState } from "react";
-
-type User = {
-  id: string;
-  name: string;
-  avatar?: string;
-};
-
-// TODO: Fetch all users
-const users: User[] = [
-  {
-    id: "ab",
-    name: "Abhay V Ashokan",
-    avatar: "https://avatars.githubusercontent.com/u/35297280",
-  },
-  {
-    id: "ca",
-    name: "Calvin Wilson",
-    avatar: "https://avatars.githubusercontent.com/u/35304653",
-  },
-];
+import { useCallback, useEffect, useState } from "react";
+import { User } from "./constants";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const Item = ({ user }: { user: User }) => {
   const { name, avatar } = user;
@@ -42,16 +24,39 @@ const Item = ({ user }: { user: User }) => {
   );
 };
 
-const UserSelect = () => {
-  const [selectedUser, setSelectedUser] = useState<User>(users[0]);
+const UserSelect = ({ users }: { users: User[] }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("user");
+
+  const [selectedUser, setSelectedUser] = useState<User>(
+    users.find((user) => user.id === userId) || users[0],
+  );
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
+
+  useEffect(() => {
+    if (userId) return;
+
+    router.push(pathname + "?" + createQueryString("user", users[0].id));
+  }, []);
+
+  const handleValueChange = (id: string) => {
+    setSelectedUser(users.find((user) => user.id === id) || users[0]);
+    router.push(pathname + "?" + createQueryString("user", id));
+  };
 
   return (
-    <Select
-      value={selectedUser.id}
-      onValueChange={(id) =>
-        setSelectedUser(users.find((user) => user.id === id) || users[0])
-      }
-    >
+    <Select value={selectedUser.id} onValueChange={handleValueChange}>
       <SelectTrigger className="h-8 w-52">
         <SelectValue placeholder={<Item user={selectedUser} />} />
       </SelectTrigger>

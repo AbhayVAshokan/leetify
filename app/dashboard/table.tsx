@@ -21,18 +21,41 @@ import ColumnToggle from "@/components/ui/table/column-toggle";
 
 import AddProblem from "./add-problem";
 import UserSelect from "./user-select";
+import { User } from "./constants";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  users: User[];
 }
 
 const DataTable = <TData, TValue>({
   columns,
-  data,
+  users,
 }: DataTableProps<TData, TValue>) => {
+  const [problems, setProblems] = useState([]);
+
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("user");
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const fetchPosts = async () => {
+      const response = await axios.get(
+        `http://localhost:3000/api/users/${userId}/problems`,
+      );
+
+      setProblems(response.data);
+    };
+
+    fetchPosts();
+  }, [userId]);
+
   const table = useReactTable({
-    data,
+    data: problems,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -44,7 +67,7 @@ const DataTable = <TData, TValue>({
       <div className="flex flex-wrap-reverse items-center justify-between gap-2 md:flex-nowrap">
         <AddProblem />
         <div className="flex gap-2">
-          <UserSelect />
+          <UserSelect users={users} />
           <ColumnToggle table={table} />
         </div>
       </div>
