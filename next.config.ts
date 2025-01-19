@@ -1,12 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  rewrites: async () => [
-    {
-      source: "/",
-      destination: "/dashboard",
-    },
-  ],
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;

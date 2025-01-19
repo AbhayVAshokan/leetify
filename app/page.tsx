@@ -8,6 +8,8 @@ async function getFirstUser(): Promise<User[]> {
   return response.data[0].id;
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const defaultUserId = await getFirstUser();
   redirect(`/${defaultUserId}`);
