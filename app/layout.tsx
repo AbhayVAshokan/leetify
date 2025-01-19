@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import ThemeSwitcher from "@/components/theme/theme-switcher";
 import clsx from "clsx";
+import "@/lib/axios";
 
 const inter = Inter({
   variable: "--font-inter",

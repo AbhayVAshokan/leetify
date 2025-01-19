@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { User } from "./[userId]/constants";
 
 async function getFirstUser(): Promise<User[]> {
-  const response = await axios.get("http://localhost:3000/api/users");
+  const response = await axios.get("/api/users");
 
   return response.data[0].id;
 }

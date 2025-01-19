@@ -4,15 +4,13 @@ import { columns, Problem, User } from "./constants";
 import Table from "./table";
 
 async function getUsers(): Promise<User[]> {
-  const response = await axios.get("http://localhost:3000/api/users");
+  const response = await axios.get("/api/users");
 
   return response.data;
 }
 
 async function getProblems(userId: string): Promise<Problem[]> {
-  const response = await axios.get(
-    `http://localhost:3000/api/users/${userId}/problems`,
-  );
+  const response = await axios.get(`/api/users/${userId}/problems`);
 
   return response.data;
 }
