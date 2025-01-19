@@ -11,6 +11,8 @@ export const LEET_CODE_HEADERS = {
   Referer: "https://leetcode.com",
 };
 
+export const SYNC_START_DATE = new Date(2025, 0, 3);
+
 export const SUBMISSIONS_QUERY = `#graphql
 query getACSubmissions ($username: String!, $limit: Int) {
     recentAcSubmissionList(username: $username, limit: $limit) {

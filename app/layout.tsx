@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import ThemeSwitcher from "@/components/theme/theme-switcher";
 import clsx from "clsx";
 import "@/lib/axios";
+import { Toaster } from "@/components/ui/toast/toaster";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -43,6 +44,7 @@ const RootLayout = ({
               <ThemeSwitcher />
             </header>
             {children}
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>

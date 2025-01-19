@@ -53,11 +53,11 @@ export const columns: ColumnDef<Problem>[] = [
     header: ({ column }) => <ColumnHeader column={column} title="Difficulty" />,
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "submittedAt",
     header: ({ column }) => <ColumnHeader column={column} title="Date" />,
     cell: ({ row }) => (
       <p className="w-24">
-        {new Date(row.getValue("createdAt")).toLocaleDateString("en-US", {
+        {new Date(row.getValue("submittedAt")).toLocaleDateString("en-US", {
           day: "numeric",
           month: "short",
           year: "numeric",

@@ -7,6 +7,7 @@ import {
   PROBLEM_DETAILS_QUERY,
   SubmissionResponse,
   SUBMISSIONS_QUERY,
+  SYNC_START_DATE,
 } from "./constants";
 
 const fetchSubmissions = async (userName: string) => {
@@ -42,9 +43,13 @@ const fetchProblemDetails = async (titleSlug: string) => {
 
 const fetchSubmissionsAndSyncWithDB = async (user: User) => {
   const data = await fetchSubmissions(user.leetCodeUserName);
-  const submissions: SubmissionResponse[] = data.data.recentAcSubmissionList;
 
-  submissions.map(async (submission) => {
+  const submissions: SubmissionResponse[] = data.data.recentAcSubmissionList;
+  const filteredSubmissions = submissions.filter(
+    (submission) => new Date(submission.timestamp * 1000) > SYNC_START_DATE,
+  );
+
+  filteredSubmissions.map(async (submission) => {
     const data = await fetchProblemDetails(submission.titleSlug);
     const difficulty = data.data.question.difficulty;
 
@@ -60,16 +65,26 @@ const fetchSubmissionsAndSyncWithDB = async (user: User) => {
         url: `https://leetcode.com/problems/${submission.titleSlug}`,
         difficulty,
         userId: user.id,
+        submittedAt: new Date(submission.timestamp * 1000),
       },
-      update: {},
+      update: {
+        title: submission.title,
+        url: `https://leetcode.com/problems/${submission.titleSlug}`,
+        difficulty,
+        userId: user.id,
+        submittedAt: new Date(submission.timestamp * 1000),
+      },
     });
   });
 };
 
-export async function GET() {
+export async function POST() {
   const users = await prisma.user.findMany();
 
   users.forEach((user) => fetchSubmissionsAndSyncWithDB(user));
 
-  return Response.json({ message: "Started sync" });
+  return Response.json({
+    message:
+      "Started sync. Please refresh the page after a while to see the latest data.",
+  });
 }
