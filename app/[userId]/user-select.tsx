@@ -7,9 +7,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { useCallback, useEffect, useState } from "react";
 import { User } from "./constants";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const Item = ({ user }: { user: User }) => {
   const { name, avatar } = user;
@@ -26,34 +25,10 @@ const Item = ({ user }: { user: User }) => {
 
 const UserSelect = ({ users }: { users: User[] }) => {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("user");
+  const { userId } = useParams();
+  const selectedUser = users.find((user) => user.id === userId) || users[0];
 
-  const [selectedUser, setSelectedUser] = useState<User>(
-    users.find((user) => user.id === userId) || users[0],
-  );
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams],
-  );
-
-  useEffect(() => {
-    if (userId) return;
-
-    router.push(pathname + "?" + createQueryString("user", users[0].id));
-  }, []);
-
-  const handleValueChange = (id: string) => {
-    setSelectedUser(users.find((user) => user.id === id) || users[0]);
-    router.push(pathname + "?" + createQueryString("user", id));
-  };
+  const handleValueChange = (id: string) => router.push(`/${id}`);
 
   return (
     <Select value={selectedUser.id} onValueChange={handleValueChange}>

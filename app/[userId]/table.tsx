@@ -22,38 +22,18 @@ import ColumnToggle from "@/components/ui/table/column-toggle";
 import AddProblem from "./add-problem";
 import UserSelect from "./user-select";
 import { User } from "./constants";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useSearchParams } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
+  problems: TData[];
   users: User[];
 }
 
 const DataTable = <TData, TValue>({
   columns,
+  problems,
   users,
 }: DataTableProps<TData, TValue>) => {
-  const [problems, setProblems] = useState([]);
-
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("user");
-
-  useEffect(() => {
-    if (!userId) return;
-
-    const fetchPosts = async () => {
-      const response = await axios.get(
-        `http://localhost:3000/api/users/${userId}/problems`,
-      );
-
-      setProblems(response.data);
-    };
-
-    fetchPosts();
-  }, [userId]);
-
   const table = useReactTable({
     data: problems,
     columns,
@@ -116,7 +96,6 @@ const DataTable = <TData, TValue>({
                     className="h-24 items-center justify-center space-y-2 text-center"
                   >
                     <p>There are no problems to show.</p>
-                    <button>Add new problem</button>
                   </TableCell>
                 </TableRow>
               )}
