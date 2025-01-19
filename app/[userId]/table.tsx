@@ -7,6 +7,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import axios from "axios";
 
 import {
   Table,
@@ -16,10 +17,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import Pagination from "@/components/ui/table/pagination";
 import ColumnToggle from "@/components/ui/table/column-toggle";
 
-import AddProblem from "./add-problem";
 import UserSelect from "./user-select";
 import { User } from "./constants";
 
@@ -42,10 +44,24 @@ const DataTable = <TData, TValue>({
     initialState: { pagination: { pageSize: 10 } },
   });
 
+  const { toast } = useToast();
+
+  const handleSyncClick = async () => {
+    try {
+      const response = await axios.post("/api/sync");
+
+      toast({ title: response.data.message });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap-reverse items-center justify-between gap-2 md:flex-nowrap">
-        <AddProblem />
+        <Button onClick={handleSyncClick} variant="secondary" size="sm">
+          Sync with LeetCode
+        </Button>
         <div className="flex gap-2">
           <UserSelect users={users} />
           <ColumnToggle table={table} />
