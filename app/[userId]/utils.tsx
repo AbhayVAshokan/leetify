@@ -3,15 +3,12 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import ColumnHeader from "@/components/ui/table/column-header";
 import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import { Star, Link } from "lucide-react";
+import { Star } from "lucide-react";
 import { toggleFavorite } from "../actions";
 import { Problem } from "./constants";
+import Link from "next/link";
 
 export const buildColumns = (userId: string): ColumnDef<Problem>[] => [
-  {
-    accessorKey: "id",
-    header: ({ column }) => <ColumnHeader column={column} title="ID" />,
-  },
   {
     accessorKey: "isFavorite",
     header: () => <></>,
@@ -20,7 +17,7 @@ export const buildColumns = (userId: string): ColumnDef<Problem>[] => [
         variant="ghost"
         size="icon"
         onClick={() => {
-          toggleFavorite({ userId, problemId: row.getValue("id") });
+          toggleFavorite({ userId, problemId: row.original.id });
         }}
       >
         {row.getValue("isFavorite") ? (
