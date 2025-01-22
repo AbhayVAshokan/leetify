@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: leetify_postgres
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=leetify-user-local
+      - POSTGRES_PASSWORD=leetify-local
+    volumes:
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgresdata:/data/postgres
+
+volumes:
+  postgresdata:
+    driver: local

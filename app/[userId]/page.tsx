@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { columns, Problem, User } from "./constants";
+import { Problem, User } from "./constants";
 import Table from "./table";
 
 async function getUsers(): Promise<User[]> {
@@ -26,7 +26,7 @@ const Dashboard = async ({
 
   return (
     <div className="container mx-auto py-4">
-      <Table columns={columns} problems={problems} users={users} />
+      <Table problems={problems} users={users} userId={userId} />
     </div>
   );
 };

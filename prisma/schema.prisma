@@ -26,7 +26,7 @@ model User {
   id                String       @default(cuid()) @id
   name              String
   leetCodeUserName  String
-  avatar            String
+  avatar            String?
   createdAt         DateTime  @default(now())
   problems          Problem[]
   @@map(name: "users")

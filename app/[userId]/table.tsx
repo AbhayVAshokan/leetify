@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
@@ -23,19 +22,17 @@ import Pagination from "@/components/ui/table/pagination";
 import ColumnToggle from "@/components/ui/table/column-toggle";
 
 import UserSelect from "./user-select";
-import { User } from "./constants";
+import { Problem, User } from "./constants";
+import { buildColumns } from "./utils";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  problems: TData[];
+interface DataTableProps<> {
+  problems: Problem[];
   users: User[];
+  userId: string;
 }
 
-const DataTable = <TData, TValue>({
-  columns,
-  problems,
-  users,
-}: DataTableProps<TData, TValue>) => {
+const DataTable = ({ problems, users, userId }: DataTableProps) => {
+  const columns = buildColumns(userId);
   const table = useReactTable({
     data: problems,
     columns,
