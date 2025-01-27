@@ -1,0 +1,12 @@
+name: Sync problems
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  sync:
+    runs_on: ubuntu-latest
+
+    steps:
+    run: curl --request POST "${{ BASE_URL }}/api/sync"
