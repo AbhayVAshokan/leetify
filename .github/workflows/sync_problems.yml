@@ -10,4 +10,4 @@ jobs:
     runs_on: ubuntu-latest
 
     steps:
-    run: curl --request POST "${{ BASE_URL }}/api/sync"
+      - run: curl --request POST "${{ BASE_URL }}/api/sync"
