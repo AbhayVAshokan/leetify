@@ -1,19 +1,19 @@
-import axios from "axios";
-
 import { Problem, User } from "./constants";
 import Table from "./table";
 
-async function getUsers(): Promise<User[]> {
-  const response = await axios.get("/api/users");
+const fetchUsers = async (): Promise<User[]> => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`);
+  const users = await response.json();
+  return users;
+};
 
-  return response.data;
-}
-
-async function getProblems(userId: string): Promise<Problem[]> {
-  const response = await axios.get(`/api/users/${userId}/problems`);
-
-  return response.data;
-}
+const fetchProblems = async (userId: string): Promise<Problem[]> => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${userId}/problems`,
+  );
+  const problems = await response.json();
+  return problems;
+};
 
 const Dashboard = async ({
   params,
@@ -21,8 +21,10 @@ const Dashboard = async ({
   params: Promise<{ userId: string }>;
 }) => {
   const { userId } = await params;
-  const users = await getUsers();
-  const problems = await getProblems(userId);
+  const [users, problems] = await Promise.all([
+    fetchUsers(),
+    fetchProblems(userId),
+  ]);
 
   return (
     <div className="container mx-auto py-4">

@@ -16,5 +16,5 @@ export async function GET(
     },
   });
 
-  return Response.json(user?.problems);
+  return Response.json(user?.problems || []);
 }

@@ -1,16 +1,17 @@
-import axios from "axios";
 import { redirect } from "next/navigation";
 import { User } from "./[userId]/constants";
 
-async function getFirstUser(): Promise<User[]> {
-  const response = await axios.get("/api/users");
+const fetchFirstUser = async (): Promise<User> => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`, {
+    next: { revalidate: 86400 },
+  });
+  const users = await response.json();
+  return users[0].id;
+};
 
-  return response.data[0].id;
-}
+const HomePage = async () => {
+  const defaultUserId = await fetchFirstUser();
+  redirect(`/ ${defaultUserId} `);
+};
 
-export const dynamic = "force-dynamic";
-
-export default async function HomePage() {
-  const defaultUserId = await getFirstUser();
-  redirect(`/${defaultUserId}`);
-}
+export default HomePage;
