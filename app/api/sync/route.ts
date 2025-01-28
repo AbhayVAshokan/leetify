@@ -79,12 +79,19 @@ const fetchSubmissionsAndSyncWithDB = async (user: User) => {
 };
 
 export async function POST() {
-  const users = await prisma.user.findMany();
+  try {
+    const users = await prisma.user.findMany();
+    const syncPromises = users.map((user) =>
+      fetchSubmissionsAndSyncWithDB(user),
+    );
+    await Promise.all(syncPromises);
 
-  users.forEach((user) => fetchSubmissionsAndSyncWithDB(user));
-
-  return Response.json({
-    message:
-      "Started sync. Please refresh the page after a while to see the latest data.",
-  });
+    return Response.json({
+      message:
+        "Started sync. Please refresh the page after a while to see the latest data.",
+    });
+  } catch (error) {
+    console.error(error);
+    return Response.json({ message: (error as Error).message });
+  }
 }
