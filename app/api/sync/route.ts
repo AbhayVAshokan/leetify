@@ -9,6 +9,7 @@ import {
   SUBMISSIONS_QUERY,
   SYNC_START_DATE,
 } from "./constants";
+import { revalidatePath } from "next/cache";
 
 const fetchSubmissions = async (userName: string) => {
   const response = await axios.post(
@@ -86,6 +87,7 @@ export async function POST() {
     );
     await Promise.all(syncPromises);
 
+    revalidatePath("/[userId]", "page");
     return Response.json({
       message:
         "Started sync. Please refresh the page after a while to see the latest data.",
