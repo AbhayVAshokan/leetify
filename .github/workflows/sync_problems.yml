@@ -7,7 +7,7 @@ on:
 
 jobs:
   sync:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - run: curl --request POST "${{ BASE_URL }}/api/sync"
+      - run: curl --request POST "${{ secrets.BASE_URL }}/api/sync"
