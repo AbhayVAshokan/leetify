@@ -12,6 +12,8 @@ import { useParams, useRouter } from "next/navigation";
 
 const Item = ({ user }: { user: User }) => {
   const { name, avatar } = user;
+  if (!avatar) return <span />;
+
   return (
     <div className="flex items-center gap-2">
       <Avatar className="h-6 w-6">

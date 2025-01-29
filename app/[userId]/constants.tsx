@@ -6,11 +6,15 @@ export type Problem = {
   title: string;
   url: string;
   difficulty: string;
-  createdAt: string;
+  createdAt: Date;
+  userId: string;
+  submittedAt: Date;
 };
 
 export type User = {
   id: string;
   name: string;
-  avatar?: string;
+  avatar: string | null;
+  leetCodeUserName: string;
+  createdAt: Date;
 };

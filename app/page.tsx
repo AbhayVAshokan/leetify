@@ -1,16 +1,9 @@
-import axios from "axios";
 import { redirect } from "next/navigation";
-import { User } from "./[userId]/constants";
+import { fetchUsers } from "./actions";
 
-async function getFirstUser(): Promise<User[]> {
-  const response = await axios.get("/api/users");
+const HomePage = async () => {
+  const users = await fetchUsers();
+  redirect(`/${users[0].id}`);
+};
 
-  return response.data[0].id;
-}
-
-export const dynamic = "force-dynamic";
-
-export default async function HomePage() {
-  const defaultUserId = await getFirstUser();
-  redirect(`/${defaultUserId}`);
-}
+export default HomePage;
