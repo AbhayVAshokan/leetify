@@ -1,19 +1,5 @@
-import { Problem, User } from "./constants";
+import { fetchProblems, fetchUsers } from "../actions";
 import Table from "./table";
-
-const fetchUsers = async (): Promise<User[]> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`);
-  const users = await response.json();
-  return users;
-};
-
-const fetchProblems = async (userId: string): Promise<Problem[]> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${userId}/problems`,
-  );
-  const problems = await response.json();
-  return problems;
-};
 
 const Dashboard = async ({
   params,
@@ -23,7 +9,7 @@ const Dashboard = async ({
   const { userId } = await params;
   const [users, problems] = await Promise.all([
     fetchUsers(),
-    fetchProblems(userId),
+    fetchProblems({ userId }),
   ]);
 
   return (
