@@ -1,6 +1,11 @@
 import { fetchProblems, fetchUsers } from "../actions";
 import Table from "./table";
 
+export const generateStaticParams = async () => {
+  const users = await fetchUsers();
+  return users.map(({ id }) => ({ userId: id }));
+};
+
 const Dashboard = async ({
   params,
 }: {
