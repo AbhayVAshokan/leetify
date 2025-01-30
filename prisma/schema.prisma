@@ -9,25 +9,27 @@ datasource db {
 }
 
 model Problem {
-  id            String     @default(cuid()) @id
-  isFavorite    Boolean    @default(false)
-  title         String
-  difficulty    String
-  url           String
-  user          User   @relation(fields: [userId], references: [id])
-  userId        String
-  createdAt     DateTime  @default(now())
-  submittedAt   DateTime
-  @@map(name: "problems")
+  id          String   @id @default(cuid())
+  isFavorite  Boolean  @default(false)
+  title       String
+  difficulty  String
+  url         String
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  createdAt   DateTime @default(now())
+  submittedAt DateTime
+
   @@unique([title, userId], name: "uniqueUserProblem")
+  @@map(name: "problems")
 }
 
 model User {
-  id                String       @default(cuid()) @id
-  name              String
-  leetCodeUserName  String
-  avatar            String?
-  createdAt         DateTime  @default(now())
-  problems          Problem[]
+  id        String    @id @default(cuid())
+  name      String
+  username  String    @unique
+  avatar    String?
+  createdAt DateTime  @default(now())
+  problems  Problem[]
+
   @@map(name: "users")
 }
