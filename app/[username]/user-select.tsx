@@ -12,14 +12,15 @@ import { useParams, useRouter } from "next/navigation";
 
 const Item = ({ user }: { user: User }) => {
   const { name, avatar } = user;
-  if (!avatar) return <span />;
 
   return (
     <div className="flex items-center gap-2">
-      <Avatar className="h-6 w-6">
-        <AvatarImage src={avatar} alt={name} />
-        <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
-      </Avatar>
+      {avatar && (
+        <Avatar className="h-6 w-6">
+          <AvatarImage src={avatar} alt={name} />
+          <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
+        </Avatar>
+      )}
       {name}
     </div>
   );
@@ -27,19 +28,21 @@ const Item = ({ user }: { user: User }) => {
 
 const UserSelect = ({ users }: { users: User[] }) => {
   const router = useRouter();
-  const { userId } = useParams();
-  const selectedUser = users.find((user) => user.id === userId) || users[0];
+  const { username } = useParams();
+  const selectedUser =
+    users.find((user) => user.username === username) || users[0];
 
-  const handleValueChange = (id: string) => router.push(`/${id}`);
+  const handleValueChange = (username: string) =>
+    router.push(`/${username.toLowerCase()}`);
 
   return (
-    <Select value={selectedUser.id} onValueChange={handleValueChange}>
+    <Select value={selectedUser.username} onValueChange={handleValueChange}>
       <SelectTrigger className="h-8 w-52">
         <SelectValue placeholder={<Item user={selectedUser} />} />
       </SelectTrigger>
       <SelectContent>
         {users.map((user) => (
-          <SelectItem key={user.id} value={user.id}>
+          <SelectItem key={user.id} value={user.username}>
             <Item user={user} />
           </SelectItem>
         ))}

@@ -3,23 +3,25 @@ import Table from "./table";
 
 export const generateStaticParams = async () => {
   const users = await fetchUsers();
-  return users.map(({ id }) => ({ userId: id }));
+  return users.map(({ username }) => ({
+    username: username.toLowerCase(),
+  }));
 };
 
 const Dashboard = async ({
   params,
 }: {
-  params: Promise<{ userId: string }>;
+  params: Promise<{ username: string }>;
 }) => {
-  const { userId } = await params;
+  const { username } = await params;
   const [users, problems] = await Promise.all([
     fetchUsers(),
-    fetchProblems({ userId }),
+    fetchProblems({ username }),
   ]);
 
   return (
     <div className="container mx-auto py-4">
-      <Table problems={problems} users={users} userId={userId} />
+      <Table problems={problems} users={users} username={username} />
     </div>
   );
 };

@@ -11,42 +11,41 @@ export const fetchUsers = async (): Promise<User[]> => {
 };
 
 export const fetchProblems = async ({
-  userId,
+  username,
 }: {
-  userId: string;
+  username: string;
 }): Promise<Problem[]> => {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
+  const user = await prisma.user.findFirst({
+    where: {
+      username: {
+        equals: username,
+        mode: "insensitive",
+      },
+    },
     include: { problems: true },
   });
   return user?.problems ?? [];
 };
 
 export const toggleFavorite = async ({
-  userId,
+  username,
   problemId,
 }: {
-  userId: string;
+  username: string;
   problemId: string;
 }) => {
   try {
     const problem = await prisma.problem.findFirst({
-      where: {
-        id: problemId,
-        userId,
-      },
+      where: { id: problemId },
     });
 
     await prisma.problem.update({
-      where: {
-        id: problemId,
-        userId,
-      },
+      where: { id: problemId },
       data: {
         isFavorite: !problem?.isFavorite,
       },
     });
-    revalidatePath(`/${userId}`);
+    revalidatePath(`/${username}`);
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       return Response.json("Problem not found for the user", { status: 404 });

@@ -9,7 +9,7 @@ import { Problem } from "@prisma/client";
 
 import { toggleFavorite } from "../actions";
 
-export const buildColumns = (userId: string): ColumnDef<Problem>[] => [
+export const buildColumns = (username: string): ColumnDef<Problem>[] => [
   {
     accessorKey: "isFavorite",
     header: () => <></>,
@@ -18,7 +18,7 @@ export const buildColumns = (userId: string): ColumnDef<Problem>[] => [
         variant="ghost"
         size="icon"
         onClick={() => {
-          toggleFavorite({ userId, problemId: row.original.id });
+          toggleFavorite({ username, problemId: row.original.id });
         }}
       >
         {row.getValue("isFavorite") ? (

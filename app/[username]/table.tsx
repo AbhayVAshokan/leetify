@@ -28,11 +28,11 @@ import { buildColumns } from "./utils";
 interface DataTableProps<> {
   problems: Problem[];
   users: User[];
-  userId: string;
+  username: string;
 }
 
-const DataTable = ({ problems, users, userId }: DataTableProps) => {
-  const columns = buildColumns(userId);
+const DataTable = ({ problems, users, username }: DataTableProps) => {
+  const columns = buildColumns(username);
   const table = useReactTable({
     data: problems,
     columns,

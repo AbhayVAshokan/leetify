@@ -11,13 +11,13 @@ import {
 } from "./constants";
 import { revalidatePath } from "next/cache";
 
-const fetchSubmissions = async (userName: string) => {
+const fetchSubmissions = async (username: string) => {
   const response = await axios.post(
     LEET_CODE_GRAPH_URL,
     {
       query: SUBMISSIONS_QUERY,
       variables: {
-        username: userName,
+        username,
         limit: 20,
       },
     },
@@ -43,7 +43,7 @@ const fetchProblemDetails = async (titleSlug: string) => {
 };
 
 const fetchSubmissionsAndSyncWithDB = async (user: User) => {
-  const data = await fetchSubmissions(user.leetCodeUserName);
+  const data = await fetchSubmissions(user.username);
 
   const submissions: SubmissionResponse[] = data.data.recentAcSubmissionList;
   const filteredSubmissions = submissions.filter(
@@ -87,7 +87,7 @@ export async function POST() {
     );
     await Promise.all(syncPromises);
 
-    revalidatePath("/[userId]", "page");
+    revalidatePath("/[username]", "page");
     return Response.json({
       message:
         "Started sync. Please refresh the page after a while to see the latest data.",
