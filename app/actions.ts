@@ -1,9 +1,9 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { Problem, User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { revalidatePath } from "next/cache";
-import { Problem, User } from "./[userId]/constants";
 
 export const fetchUsers = async (): Promise<User[]> => {
   const users = await prisma.user.findMany();
@@ -22,7 +22,6 @@ export const fetchProblems = async ({
   return user?.problems ?? [];
 };
 
-// TODO: Take `favorite` as argument and refactor it to execute a single SQL query.
 export const toggleFavorite = async ({
   userId,
   problemId,

@@ -4,9 +4,10 @@ import ColumnHeader from "@/components/ui/table/column-header";
 import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { Star } from "lucide-react";
-import { toggleFavorite } from "../actions";
-import { Problem } from "./constants";
 import Link from "next/link";
+import { Problem } from "@prisma/client";
+
+import { toggleFavorite } from "../actions";
 
 export const buildColumns = (userId: string): ColumnDef<Problem>[] => [
   {

@@ -6,8 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { User } from "@prisma/client";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { User } from "./constants";
 import { useParams, useRouter } from "next/navigation";
 
 const Item = ({ user }: { user: User }) => {
