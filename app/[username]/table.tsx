@@ -7,6 +7,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import axios from "axios";
+import { Problem, User } from "@prisma/client";
 
 import {
   Table,
@@ -22,17 +23,16 @@ import Pagination from "@/components/ui/table/pagination";
 import ColumnToggle from "@/components/ui/table/column-toggle";
 
 import UserSelect from "./user-select";
-import { Problem, User } from "./constants";
 import { buildColumns } from "./utils";
 
 interface DataTableProps<> {
   problems: Problem[];
   users: User[];
-  userId: string;
+  username: string;
 }
 
-const DataTable = ({ problems, users, userId }: DataTableProps) => {
-  const columns = buildColumns(userId);
+const DataTable = ({ problems, users, username }: DataTableProps) => {
+  const columns = buildColumns(username);
   const table = useReactTable({
     data: problems,
     columns,
