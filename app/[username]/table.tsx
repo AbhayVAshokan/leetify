@@ -93,7 +93,8 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                     className={cn({
-                      "bg-amber-50 dark:bg-[#171200]": row.original.isFavorite,
+                      "bg-amber-50 hover:bg-[#fcf6de] dark:bg-[#171200] dark:hover:bg-[#1c1600]":
+                        row.original.isFavorite,
                     })}
                   >
                     {row.getVisibleCells().map((cell) => (
