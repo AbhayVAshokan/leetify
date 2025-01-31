@@ -30,7 +30,7 @@ const UserSelect = ({ users }: { users: User[] }) => {
   const router = useRouter();
   const { username } = useParams();
   const selectedUser =
-    users.find((user) => user.username === username) || users[0];
+    users.find((user) => user.username.toLowerCase() === username) || users[0];
 
   const handleValueChange = (username: string) =>
     router.push(`/${username.toLowerCase()}`);
