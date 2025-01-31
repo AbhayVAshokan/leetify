@@ -24,6 +24,7 @@ import ColumnToggle from "@/components/ui/table/column-toggle";
 
 import UserSelect from "./user-select";
 import { buildColumns } from "./utils";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<> {
   problems: Problem[];
@@ -91,6 +92,9 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    className={cn({
+                      "bg-amber-50 dark:bg-[#171200]": row.original.isFavorite,
+                    })}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>

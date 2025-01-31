@@ -22,7 +22,7 @@ export const buildColumns = (username: string): ColumnDef<Problem>[] => [
         }}
       >
         {row.getValue("isFavorite") ? (
-          <Star className="fill-foreground" />
+          <Star className="fill-amber-500 text-amber-500" />
         ) : (
           <Star />
         )}
@@ -37,7 +37,7 @@ export const buildColumns = (username: string): ColumnDef<Problem>[] => [
     cell: ({ row }) => (
       <Link
         target="_blank"
-        href={row.getValue("url")}
+        href={row.original.url}
         className={cn("truncate", buttonVariants({ variant: "link" }))}
       >
         {row.getValue("title")}
@@ -60,11 +60,5 @@ export const buildColumns = (username: string): ColumnDef<Problem>[] => [
         })}
       </p>
     ),
-  },
-  {
-    accessorKey: "url",
-    header: () => <></>,
-    cell: () => <></>,
-    enableHiding: false,
   },
 ];
