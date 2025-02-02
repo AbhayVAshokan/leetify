@@ -67,6 +67,10 @@ export const fetchStreak = async ({
   const prisma = new PrismaClient();
   const result = await prisma.$queryRawTyped(getStreak(username));
   const { streakCount, currentDayCompleted } = result[0];
+  console.log(username, result);
 
-  return { streakCount, currentDayCompleted };
+  return {
+    streakCount: Number(streakCount) + Number(currentDayCompleted),
+    currentDayCompleted,
+  };
 };
