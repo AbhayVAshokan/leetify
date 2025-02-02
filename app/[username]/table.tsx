@@ -25,14 +25,24 @@ import ColumnToggle from "@/components/ui/table/column-toggle";
 import UserSelect from "./user-select";
 import { buildColumns } from "./utils";
 import { cn } from "@/lib/utils";
+import Streak from "./streak";
 
 interface DataTableProps<> {
   problems: Problem[];
   users: User[];
   username: string;
+  streakData: {
+    streakCount: number | null;
+    currentDayCompleted: boolean | null;
+  };
 }
 
-const DataTable = ({ problems, users, username }: DataTableProps) => {
+const DataTable = ({
+  problems,
+  users,
+  streakData,
+  username,
+}: DataTableProps) => {
   const columns = buildColumns(username);
   const table = useReactTable({
     data: problems,
@@ -61,6 +71,7 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
           Sync with LeetCode
         </Button>
         <div className="flex gap-2">
+          <Streak data={streakData} />
           <UserSelect users={users} />
           <ColumnToggle table={table} />
         </div>

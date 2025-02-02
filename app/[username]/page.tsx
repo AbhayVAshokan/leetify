@@ -1,4 +1,4 @@
-import { fetchProblems, fetchUsers } from "../actions";
+import { fetchProblems, fetchStreak, fetchUsers } from "../actions";
 import Table from "./table";
 
 export const generateStaticParams = async () => {
@@ -14,14 +14,20 @@ const Dashboard = async ({
   params: Promise<{ username: string }>;
 }) => {
   const { username } = await params;
-  const [users, problems] = await Promise.all([
+  const [users, problems, streakData] = await Promise.all([
     fetchUsers(),
     fetchProblems({ username }),
+    fetchStreak({ username }),
   ]);
 
   return (
     <div className="container mx-auto py-4">
-      <Table problems={problems} users={users} username={username} />
+      <Table
+        problems={problems}
+        users={users}
+        username={username}
+        streakData={streakData}
+      />
     </div>
   );
 };
