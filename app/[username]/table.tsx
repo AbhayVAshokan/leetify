@@ -6,7 +6,6 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import axios from "axios";
 import { Problem, User } from "@prisma/client";
 
 import {
@@ -18,7 +17,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import Pagination from "@/components/ui/table/pagination";
 import ColumnToggle from "@/components/ui/table/column-toggle";
 
@@ -26,7 +24,7 @@ import UserSelect from "./user-select";
 import { buildColumns } from "./utils";
 import { cn } from "@/lib/utils";
 import { useOptimistic, useTransition } from "react";
-import { toggleFavorite } from "../actions/problems";
+import { syncWithLeetCode, toggleFavorite } from "../actions/problems";
 
 interface DataTableProps<> {
   problems: Problem[];
@@ -78,22 +76,14 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
     initialState: { pagination: { pageSize: 10 } },
   });
 
-  const { toast } = useToast();
-
-  const handleSyncClick = async () => {
-    try {
-      const response = await axios.post("/api/sync");
-
-      toast({ title: response.data.message });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap-reverse items-center justify-between gap-2 md:flex-nowrap">
-        <Button onClick={handleSyncClick} variant="secondary" size="sm">
+        <Button
+          onClick={() => syncWithLeetCode()}
+          variant="secondary"
+          size="sm"
+        >
           Sync with LeetCode
         </Button>
         <div className="flex gap-2">
