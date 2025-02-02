@@ -1,8 +1,9 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Problem, User } from "@prisma/client";
+import { PrismaClient, Problem, User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { getStreak } from "../prisma/sql";
 import { revalidatePath } from "next/cache";
 
 export const fetchUsers = async (): Promise<User[]> => {
@@ -53,4 +54,19 @@ export const toggleFavorite = async ({
       return Response.json("Unexpected error", { status: 500 });
     }
   }
+};
+
+export const fetchStreak = async ({
+  username,
+}: {
+  username: string;
+}): Promise<{
+  streakCount: number | null;
+  currentDayCompleted: boolean | null;
+}> => {
+  const prisma = new PrismaClient();
+  const result = await prisma.$queryRawTyped(getStreak(username));
+  const { streakCount, currentDayCompleted } = result[0];
+
+  return { streakCount, currentDayCompleted };
 };
