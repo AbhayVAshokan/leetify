@@ -18,7 +18,11 @@ export const buildColumns = (username: string): ColumnDef<Problem>[] => [
         variant="ghost"
         size="icon"
         onClick={() => {
-          toggleFavorite({ username, problemId: row.original.id });
+          toggleFavorite({
+            username,
+            problemId: row.original.id,
+            isFavorite: !row.getValue("isFavorite"),
+          });
         }}
       >
         {row.getValue("isFavorite") ? (

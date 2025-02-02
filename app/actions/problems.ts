@@ -25,19 +25,17 @@ export const fetchProblems = async ({
 export const toggleFavorite = async ({
   username,
   problemId,
+  isFavorite,
 }: {
   username: string;
   problemId: string;
+  isFavorite: boolean;
 }) => {
   try {
-    const problem = await prisma.problem.findFirst({
-      where: { id: problemId },
-    });
-
     await prisma.problem.update({
       where: { id: problemId },
       data: {
-        isFavorite: !problem?.isFavorite,
+        isFavorite,
       },
     });
     revalidatePath(`/${username}`);
