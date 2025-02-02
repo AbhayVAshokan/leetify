@@ -54,7 +54,7 @@ export const fetchSubmissionsAndSyncWithDB = async (user: User) => {
     (submission) => new Date(submission.timestamp * 1000) > SYNC_START_DATE,
   );
 
-  filteredSubmissions.map(async (submission) => {
+  const submissionPromises = filteredSubmissions.map(async (submission) => {
     const data = await fetchProblemDetails(submission.titleSlug);
     const difficulty = data.data.question.difficulty;
 
@@ -81,4 +81,6 @@ export const fetchSubmissionsAndSyncWithDB = async (user: User) => {
       },
     });
   });
+
+  await Promise.all(submissionPromises);
 };
