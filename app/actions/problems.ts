@@ -1,14 +1,9 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Problem, User } from "@prisma/client";
+import { Problem } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { revalidatePath } from "next/cache";
-
-export const fetchUsers = async (): Promise<User[]> => {
-  const users = await prisma.user.findMany();
-  return users;
-};
 
 export const fetchProblems = async ({
   username,

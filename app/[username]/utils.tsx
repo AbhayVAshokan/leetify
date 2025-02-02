@@ -7,7 +7,7 @@ import { Star } from "lucide-react";
 import Link from "next/link";
 import { Problem } from "@prisma/client";
 
-import { toggleFavorite } from "../actions";
+import { toggleFavorite } from "../actions/problems";
 
 export const buildColumns = (username: string): ColumnDef<Problem>[] => [
   {

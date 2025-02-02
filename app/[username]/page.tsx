@@ -1,4 +1,5 @@
-import { fetchProblems, fetchUsers } from "../actions";
+import { fetchUsers } from "../actions/users";
+import { fetchProblems } from "../actions/problems";
 import Table from "./table";
 
 export const generateStaticParams = async () => {
