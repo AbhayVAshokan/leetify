@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import { Problem } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { revalidatePath } from "next/cache";
+import { fetchSubmissionsAndSyncWithDB } from "./utils";
 
 export const fetchProblems = async ({
   username,
@@ -45,5 +46,21 @@ export const toggleFavorite = async ({
     } else {
       return Response.json("Unexpected error", { status: 500 });
     }
+  }
+};
+
+export const syncWithLeetCode = async () => {
+  try {
+    const users = await prisma.user.findMany();
+    const syncPromises = users.map((user) =>
+      fetchSubmissionsAndSyncWithDB(user),
+    );
+    await Promise.all(syncPromises);
+
+    revalidatePath("/[username]", "page");
+    return { success: true, error: null };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error };
   }
 };
