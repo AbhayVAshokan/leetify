@@ -25,6 +25,8 @@ import ColumnToggle from "@/components/ui/table/column-toggle";
 import UserSelect from "./user-select";
 import { buildColumns } from "./utils";
 import { cn } from "@/lib/utils";
+import { useOptimistic, useTransition } from "react";
+import { toggleFavorite } from "../actions/problems";
 
 interface DataTableProps<> {
   problems: Problem[];
@@ -33,9 +35,43 @@ interface DataTableProps<> {
 }
 
 const DataTable = ({ problems, users, username }: DataTableProps) => {
-  const columns = buildColumns(username);
+  const [, startTransition] = useTransition();
+  const [optimisticProblems, updateOptimisticProblems] = useOptimistic(
+    problems,
+    (problems, { problemId, isFavorite }) => {
+      const idx = problems.findIndex((problem) => problem.id === problemId);
+      if (idx === -1) return problems;
+      problems[idx].isFavorite = isFavorite;
+
+      return problems;
+    },
+  );
+
+  const onToggleFavorite = ({
+    problemId,
+    isFavorite,
+  }: {
+    problemId: string;
+    isFavorite: boolean;
+  }) => {
+    startTransition(() => {
+      updateOptimisticProblems({
+        problemId,
+        isFavorite,
+      });
+
+      toggleFavorite({
+        username,
+        problemId,
+        isFavorite,
+      });
+    });
+  };
+
+  const columns = buildColumns(onToggleFavorite);
+
   const table = useReactTable({
-    data: problems,
+    data: optimisticProblems,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

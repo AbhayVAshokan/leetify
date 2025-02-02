@@ -7,9 +7,9 @@ import { Star } from "lucide-react";
 import Link from "next/link";
 import { Problem } from "@prisma/client";
 
-import { toggleFavorite } from "../actions";
-
-export const buildColumns = (username: string): ColumnDef<Problem>[] => [
+export const buildColumns = (
+  onToggleFavorite: (props: { problemId: string; isFavorite: boolean }) => void,
+): ColumnDef<Problem>[] => [
   {
     accessorKey: "isFavorite",
     header: () => <></>,
@@ -17,11 +17,14 @@ export const buildColumns = (username: string): ColumnDef<Problem>[] => [
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => {
-          toggleFavorite({ username, problemId: row.original.id });
-        }}
+        onClick={() =>
+          onToggleFavorite({
+            problemId: row.original.id,
+            isFavorite: !row.original.isFavorite,
+          })
+        }
       >
-        {row.getValue("isFavorite") ? (
+        {row.original.isFavorite ? (
           <Star className="fill-amber-500 text-amber-500" />
         ) : (
           <Star />
