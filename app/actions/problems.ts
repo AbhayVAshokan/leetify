@@ -18,7 +18,7 @@ export const fetchProblems = async ({
         mode: "insensitive",
       },
     },
-    include: { problems: true },
+    include: { problems: { orderBy: { submittedAt: "asc" } } },
   });
   return user?.problems ?? [];
 };
