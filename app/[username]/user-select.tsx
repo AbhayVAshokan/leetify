@@ -6,12 +6,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { UserRanked } from "@/types/user";
 import { User } from "@prisma/client";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { useParams, useRouter } from "next/navigation";
 
-const Item = ({ user }: { user: User }) => {
-  const { name, avatar } = user;
+const Item = ({ user }: { user: UserRanked }) => {
+  const { name, avatar, score, rank } = user;
 
   return (
     <div className="flex items-center gap-2">
@@ -22,6 +23,8 @@ const Item = ({ user }: { user: User }) => {
         </Avatar>
       )}
       {name}
+      {score && <p className="text-sm text-gray-500">{`Score: ${score}`}</p>}
+      {rank && <p className="text-sm text-gray-500">{`Rank: #${rank}`}</p>}
     </div>
   );
 };
