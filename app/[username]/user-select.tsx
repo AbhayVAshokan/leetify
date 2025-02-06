@@ -11,8 +11,8 @@ import { User } from "@prisma/client";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { useParams, useRouter } from "next/navigation";
 
-const Item = ({ user }: { user: UserRanked }) => {
-  const { name, avatar, score, rank } = user;
+const Item = ({ user }: { user: User }) => {
+  const { name, avatar, score, rank } = user as UserRanked;
 
   return (
     <div className="flex items-center gap-2">
@@ -22,9 +22,9 @@ const Item = ({ user }: { user: UserRanked }) => {
           <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
         </Avatar>
       )}
-      {name}
-      {score && <p className="text-sm text-gray-500">{`Score: ${score}`}</p>}
-      {rank && <p className="text-sm text-gray-500">{`Rank: #${rank}`}</p>}
+      <p>{name}</p>
+      <p className="text-sm text-gray-500">{`Rank: #${rank}`}</p>
+      <p className="text-sm text-gray-500">{`Score: ${score}`}</p>
     </div>
   );
 };
@@ -40,7 +40,7 @@ const UserSelect = ({ users }: { users: User[] }) => {
 
   return (
     <Select value={selectedUser.username} onValueChange={handleValueChange}>
-      <SelectTrigger className="h-8 w-52">
+      <SelectTrigger className="h-8">
         <SelectValue placeholder={<Item user={selectedUser} />} />
       </SelectTrigger>
       <SelectContent>
