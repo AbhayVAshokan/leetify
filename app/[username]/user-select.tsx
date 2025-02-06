@@ -6,12 +6,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { UserRanked } from "@/types/user";
 import { User } from "@prisma/client";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { useParams, useRouter } from "next/navigation";
 
 const Item = ({ user }: { user: User }) => {
-  const { name, avatar } = user;
+  const { name, avatar, score, rank } = user as UserRanked;
 
   return (
     <div className="flex items-center gap-2">
@@ -21,7 +22,9 @@ const Item = ({ user }: { user: User }) => {
           <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
         </Avatar>
       )}
-      {name}
+      <p>{name}</p>
+      <p className="text-sm text-gray-500">{`Rank: #${rank}`}</p>
+      <p className="text-sm text-gray-500">{`Score: ${score}`}</p>
     </div>
   );
 };
@@ -37,7 +40,7 @@ const UserSelect = ({ users }: { users: User[] }) => {
 
   return (
     <Select value={selectedUser.username} onValueChange={handleValueChange}>
-      <SelectTrigger className="h-8 w-52">
+      <SelectTrigger className="h-8">
         <SelectValue placeholder={<Item user={selectedUser} />} />
       </SelectTrigger>
       <SelectContent>
