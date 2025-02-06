@@ -83,7 +83,10 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: { pagination: { pageSize: 10 } },
+    initialState: {
+      pagination: { pageSize: 10 },
+      sorting: [{ id: "submittedAt", desc: true }],
+    },
   });
 
   return (
