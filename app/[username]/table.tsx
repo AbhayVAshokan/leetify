@@ -35,6 +35,8 @@ interface DataTableProps<> {
 
 const DataTable = ({ problems, users, username }: DataTableProps) => {
   const [, startTransition] = useTransition();
+  const [isSyncPending, startSyncTransition] = useTransition();
+
   const [optimisticProblems, updateOptimisticProblems] = useOptimistic(
     problems,
     (problems, { problemId, isFavorite }) => {
@@ -46,7 +48,7 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
     },
   );
 
-  const onToggleFavorite = ({
+  const handleToggleFavorite = ({
     problemId,
     isFavorite,
   }: {
@@ -67,7 +69,13 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
     });
   };
 
-  const columns = buildColumns(onToggleFavorite);
+  const handleSync = () => {
+    startSyncTransition(async () => {
+      await syncWithLeetCode();
+    });
+  };
+
+  const columns = buildColumns(handleToggleFavorite);
 
   const table = useReactTable({
     data: optimisticProblems,
@@ -82,7 +90,8 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
     <div className="space-y-4">
       <div className="flex flex-wrap-reverse items-center justify-between gap-2 md:flex-nowrap">
         <Button
-          onClick={() => syncWithLeetCode()}
+          onClick={handleSync}
+          loading={isSyncPending}
           variant="secondary"
           size="sm"
         >
