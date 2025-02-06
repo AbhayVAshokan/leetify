@@ -11,10 +11,8 @@ export const fetchUsers = async (): Promise<UserRanked[]> => {
   // Calculate score dynamically
   const usersWithScore = users.map((user) => {
     const score = user.problems.reduce((sum, problem) => {
-      if (problem.difficulty === "easy") return sum + SCORE.easy; // Easy → 2 points
-      if (problem.difficulty === "medium") return sum + SCORE.medium; // Medium → 4 points
-      if (problem.difficulty === "hard") return sum + SCORE.hard; // Hard → 6 points
-      return sum;
+      const difficulty = problem.difficulty.toLowerCase() as keyof typeof SCORE;
+      return sum + SCORE[difficulty];
     }, 0);
 
     return {
