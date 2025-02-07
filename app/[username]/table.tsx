@@ -34,7 +34,7 @@ interface DataTableProps<> {
 }
 
 const DataTable = ({ problems, users, username }: DataTableProps) => {
-  const [isFavoritePending, startFavoriteTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const [isSyncPending, startSyncTransition] = useTransition();
 
   const [optimisticProblems, updateOptimisticProblems] = useOptimistic(
@@ -55,13 +55,13 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
     problemId: string;
     isFavorite: boolean;
   }) => {
-    startFavoriteTransition(async () => {
+    startTransition(() => {
       updateOptimisticProblems({
         problemId,
         isFavorite,
       });
 
-      await toggleFavorite({
+      toggleFavorite({
         username,
         problemId,
         isFavorite,
@@ -107,7 +107,7 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
       </div>
       <div className="space-y-4">
         <div className="rounded-md border">
-          <Table loading={isFavoritePending}>
+          <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>

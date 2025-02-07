@@ -1,18 +1,12 @@
 import React from "react";
 
 import { cn } from "@/lib/utils";
-import { Loader } from "lucide-react";
 
 const Table = React.forwardRef<
   HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement> & { loading?: boolean }
->(({ className, loading = false, ...props }, ref) => (
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
   <div className="relative w-full overflow-auto">
-    {loading && (
-      <div className="absolute z-10 flex h-full w-full items-center justify-center bg-background opacity-70">
-        <Loader className="animate-spin repeat-infinite" />
-      </div>
-    )}
     <table
       ref={ref}
       className={cn("w-full caption-bottom text-sm", className)}
