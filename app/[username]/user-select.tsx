@@ -10,6 +10,7 @@ import { UserRanked } from "@/types/user";
 import { User } from "@prisma/client";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Item = ({ user }: { user: User }) => {
   const { name, avatar, score, rank } = user as UserRanked;
@@ -35,8 +36,15 @@ const UserSelect = ({ users }: { users: User[] }) => {
   const selectedUser =
     users.find((user) => user.username.toLowerCase() === username) || users[0];
 
-  const handleValueChange = (username: string) =>
+  useEffect(() => {
+    users.forEach(({ username }) => {
+      router.prefetch(`/${username.toLowerCase()}`);
+    });
+  }, []);
+
+  const handleValueChange = (username: string) => {
     router.push(`/${username.toLowerCase()}`);
+  };
 
   return (
     <Select value={selectedUser.username} onValueChange={handleValueChange}>
