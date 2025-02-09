@@ -7,6 +7,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { User } from "@prisma/client";
 import { FavoriteProblem } from "@/types/problem";
 
 import {
@@ -20,14 +21,32 @@ import {
 import Pagination from "@/components/ui/table/pagination";
 import ColumnToggle from "@/components/ui/table/column-toggle";
 import { columns } from "./utils";
+import { useMemo, useState } from "react";
+import UserSelect from "./user-select";
 
 interface DataTableProps {
   problems: FavoriteProblem[];
+  users: User[];
 }
 
-const DataTable = ({ problems }: DataTableProps) => {
+const DataTable = ({ problems, users }: DataTableProps) => {
+  const [selectedUsers, setSelectedUsers] = useState(users);
+
+  const filteredProblems = useMemo(
+    () =>
+      problems
+        .map((problem) => ({
+          ...problem,
+          users: problem.users.filter(({ username }) =>
+            selectedUsers.some((user) => user.username === username),
+          ),
+        }))
+        .filter(({ users }) => users.length > 0),
+    [selectedUsers, problems],
+  );
+
   const table = useReactTable({
-    data: problems,
+    data: filteredProblems,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -42,8 +61,11 @@ const DataTable = ({ problems }: DataTableProps) => {
     <div className="space-y-4">
       <div className="flex flex-wrap-reverse items-center justify-end gap-2 md:flex-nowrap">
         <div className="flex gap-2">
-          {/* TODO: Implement user toggle*/}
-          {/* <UserSelect users={users} /> */}
+          <UserSelect
+            users={users}
+            selectedUsers={selectedUsers}
+            onChange={setSelectedUsers}
+          />
           <ColumnToggle table={table} />
         </div>
       </div>
