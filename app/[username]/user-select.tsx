@@ -17,12 +17,10 @@ const Item = ({ user }: { user: User }) => {
 
   return (
     <div className="flex items-center gap-2">
-      {avatar && (
-        <Avatar className="h-6 w-6">
-          <AvatarImage src={avatar} alt={name} />
-          <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
-        </Avatar>
-      )}
+      <Avatar className="h-6 w-6">
+        <AvatarImage src={avatar ?? ""} alt={name} />
+        <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
+      </Avatar>
       <p>{name}</p>
       <p className="text-sm text-gray-500">{`Rank: #${rank}`}</p>
       <p className="text-sm text-gray-500">{`Score: ${score}`}</p>
