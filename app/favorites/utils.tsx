@@ -40,7 +40,7 @@ export const columns: ColumnDef<FavoriteProblem>[] = [
     sortingFn: (rowA, rowB) =>
       rowA.original.users.length - rowB.original.users.length,
     cell: ({ row }) => (
-      <div className="flex">
+      <div className="flex gap-1">
         {row.original.users.map(({ name, avatar, username }) => (
           <Link key={username} href={`/${username.toLowerCase()}`}>
             <Avatar className="h-7 w-7">

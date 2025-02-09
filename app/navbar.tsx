@@ -10,7 +10,6 @@ const NavBar = () => {
 
   return (
     <div>
-      {/* TODO: This shows a brief blank page. Adding /abhayvashokan instead is much faster.*/}
       <Link href="/">
         <Button
           variant="ghost"
