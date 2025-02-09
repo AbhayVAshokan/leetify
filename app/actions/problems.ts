@@ -78,10 +78,11 @@ export const fetchFavoriteProblems = async (): Promise<FavoriteProblem[]> => {
     (summary, problem) => {
       const favProblem = summary.find(({ url }) => url === problem.url);
       return favProblem
-        ? [
-            ...summary,
-            { ...problem, users: [problem.user, ...favProblem.users] },
-          ]
+        ? summary.map((prevProblem) =>
+            prevProblem.url === favProblem.url
+              ? { ...prevProblem, users: [problem.user, ...favProblem.users] }
+              : prevProblem,
+          )
         : [...summary, { ...problem, users: [problem.user] }];
     },
     [],
