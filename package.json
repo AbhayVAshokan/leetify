@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky",
+    "prepare": "bun run prepare:husky && bun run db:generate",
+    "prepare:husky": "husky",
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate"
   },

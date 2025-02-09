@@ -12,20 +12,28 @@ import { AvatarFallback } from "@radix-ui/react-avatar";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const Item = ({ user }: { user: User }) => {
+export const Item = ({
+  user,
+  showRank = false,
+}: {
+  user: User;
+  showRank?: boolean;
+}) => {
   const { name, avatar, score, rank } = user as UserRanked;
 
   return (
     <div className="flex items-center gap-2">
-      {avatar && (
-        <Avatar className="h-6 w-6">
-          <AvatarImage src={avatar} alt={name} />
-          <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
-        </Avatar>
-      )}
+      <Avatar className="h-6 w-6">
+        <AvatarImage src={avatar ?? ""} alt={name} />
+        <AvatarFallback>{name.substring(0, 2)}</AvatarFallback>
+      </Avatar>
       <p>{name}</p>
-      <p className="text-sm text-gray-500">{`Rank: #${rank}`}</p>
-      <p className="text-sm text-gray-500">{`Score: ${score}`}</p>
+      {showRank && (
+        <>
+          <p className="text-sm text-gray-500">{`Rank: #${rank}`}</p>
+          <p className="text-sm text-gray-500">{`Score: ${score}`}</p>
+        </>
+      )}
     </div>
   );
 };
@@ -40,7 +48,7 @@ const UserSelect = ({ users }: { users: User[] }) => {
     users.forEach(({ username }) => {
       router.prefetch(`/${username.toLowerCase()}`);
     });
-  }, []);
+  }, [users]);
 
   const handleValueChange = (username: string) => {
     router.push(`/${username.toLowerCase()}`);
@@ -54,7 +62,7 @@ const UserSelect = ({ users }: { users: User[] }) => {
       <SelectContent>
         {users.map((user) => (
           <SelectItem key={user.id} value={user.username}>
-            <Item user={user} />
+            <Item showRank user={user} />
           </SelectItem>
         ))}
       </SelectContent>

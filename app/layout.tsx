@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import ThemeSwitcher from "@/components/theme/theme-switcher";
 import clsx from "clsx";
+import NavBar from "./navbar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -39,6 +40,7 @@ const RootLayout = ({
           >
             <header className="container m-auto flex items-center justify-between py-4 text-center text-4xl">
               <h1 className={styleScript.className}>leetify</h1>
+              <NavBar />
               <ThemeSwitcher />
             </header>
             {children}
