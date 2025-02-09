@@ -72,13 +72,7 @@ export const fetchSubmissionsAndSyncWithDB = async (user: User) => {
         userId: user.id,
         submittedAt: new Date(submission.timestamp * 1000),
       },
-      update: {
-        title: submission.title,
-        url: `https://leetcode.com/problems/${submission.titleSlug}`,
-        difficulty,
-        userId: user.id,
-        submittedAt: new Date(submission.timestamp * 1000),
-      },
+      update: {},
     });
   });
 
