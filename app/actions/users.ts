@@ -47,11 +47,8 @@ export const fetchStreak = async ({
     return { streakCount: 0, currentDayCompleted: false };
   }
 
-  const currentDayCompleted =
-    parseDate(problems[0].submittedAt) === parseDate(new Date());
-
   let streakCount = 0;
-  let prevDate = parseDate(new Date(+new Date() + ONE_DAY_IN_SECONDS));
+  let prevDate = parseDate(new Date());
   problems.every((problem) => {
     const currDate = parseDate(problem.submittedAt);
     if (currDate === prevDate) {
@@ -73,8 +70,11 @@ export const fetchStreak = async ({
     return true;
   });
 
+  const currentDayCompleted =
+    parseDate(problems[0].submittedAt) === parseDate(new Date());
+
   return {
-    streakCount: streakCount,
+    streakCount: streakCount + Number(currentDayCompleted),
     currentDayCompleted: currentDayCompleted,
   };
 };
