@@ -28,3 +28,7 @@ query selectProblem($titleSlug: String!) {
         difficulty
     }
 }`;
+
+export const TIMEZONE = "Asia/Kolkata";
+
+export const ONE_DAY_IN_SECONDS = 86400000;

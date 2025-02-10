@@ -26,14 +26,24 @@ import { buildColumns } from "./utils";
 import { cn } from "@/lib/utils";
 import { useOptimistic, useTransition } from "react";
 import { syncWithLeetCode, toggleFavorite } from "../actions/problems";
+import Streak from "./streak";
 
 interface DataTableProps<> {
   problems: Problem[];
   users: User[];
   username: string;
+  streakData: {
+    streakCount: number;
+    currentDayCompleted: boolean;
+  };
 }
 
-const DataTable = ({ problems, users, username }: DataTableProps) => {
+const DataTable = ({
+  problems,
+  users,
+  username,
+  streakData,
+}: DataTableProps) => {
   const [, startTransition] = useTransition();
   const [isSyncPending, startSyncTransition] = useTransition();
 
@@ -101,6 +111,7 @@ const DataTable = ({ problems, users, username }: DataTableProps) => {
           Sync with LeetCode
         </Button>
         <div className="flex gap-2">
+          <Streak data={streakData} />
           <UserSelect users={users} />
           <ColumnToggle table={table} />
         </div>
