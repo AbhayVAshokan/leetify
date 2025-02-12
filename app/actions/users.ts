@@ -39,7 +39,11 @@ export const fetchStreak = async ({
   currentDayCompleted: boolean;
 }> => {
   const problems = await prisma.problem.findMany({
-    where: { user: { username } },
+    where: {
+      user: {
+        username: { equals: username, mode: "insensitive" },
+      },
+    },
     orderBy: { submittedAt: "desc" },
   });
 
