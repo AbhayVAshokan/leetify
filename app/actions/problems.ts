@@ -42,6 +42,7 @@ export const toggleFavorite = async ({
     });
     revalidatePath(`/${username}`);
     revalidatePath("/favorites");
+    revalidatePath("/analytics");
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       return Response.json("Problem not found for the user", { status: 404 });
