@@ -42,7 +42,10 @@ const RootLayout = ({
             disableTransitionOnChange
           >
             <header className="container m-auto flex items-center justify-between py-4 text-center text-4xl">
-              <h1 className={styleScript.className}>leetify</h1>
+              {/*TODO: Instead of hiding logo in small-screens, implement an hamburger menu for the navlinks.*/}
+              <h1 className={cn("hidden sm:inline", styleScript.className)}>
+                leetify
+              </h1>
               <NavBar />
               <ThemeSwitcher />
             </header>
