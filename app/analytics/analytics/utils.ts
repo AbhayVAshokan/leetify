@@ -11,3 +11,9 @@ export const buildChartConfig = (users: User[]) =>
     }),
     {},
   );
+
+export const formattedDate = (date: string) =>
+  new Date(date).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+  });

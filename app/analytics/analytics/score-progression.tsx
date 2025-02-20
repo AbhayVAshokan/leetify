@@ -1,4 +1,4 @@
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -10,12 +10,15 @@ import {
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { ScoreProgression as ScoreProgressionType } from "@/types/analytics";
-import { buildChartConfig } from "./utils";
+import { buildChartConfig, formattedDate } from "./utils";
 import { User } from "@prisma/client";
+import React from "react";
 
 interface ScoreProgressionProps {
   users: User[];
@@ -23,17 +26,7 @@ interface ScoreProgressionProps {
 }
 
 const ScoreProgression = ({ users, data }: ScoreProgressionProps) => {
-  // const chartData = [
-  //   { month: "January", desktop: 186, mobile: 80 },
-  //   { month: "February", desktop: 305, mobile: 200 },
-  //   { month: "March", desktop: 237, mobile: 120 },
-  //   { month: "April", desktop: 73, mobile: 190 },
-  //   { month: "May", desktop: 209, mobile: 130 },
-  //   { month: "June", desktop: 214, mobile: 140 },
-  // ];
-
   const chartConfig = buildChartConfig(users) satisfies ChartConfig;
-  console.log(data);
 
   return (
     <Card>
@@ -59,74 +52,42 @@ const ScoreProgression = ({ users, data }: ScoreProgressionProps) => {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) =>
-                new Date(value).toLocaleDateString("en-US", {
-                  day: "numeric",
-                  month: "short",
-                })
-              }
+              interval={2}
+              tickFormatter={formattedDate}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <defs>
-              {/* <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1"> */}
-              {/*   <stop */}
-              {/*     offset="5%" */}
-              {/*     stopColor="var(--color-desktop)" */}
-              {/*     stopOpacity={0.8} */}
-              {/*   /> */}
-              {/*   <stop */}
-              {/*     offset="95%" */}
-              {/*     stopColor="var(--color-desktop)" */}
-              {/*     stopOpacity={0.1} */}
-              {/*   /> */}
-              {/* </linearGradient> */}
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
-              <linearGradient
-                id="fillabhayvashokan"
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
-              >
-                <stop
-                  offset="5%"
-                  stopColor="hsl(var(--chart-1))"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="hsl(var(--chart-1))"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
-            </defs>
-            <Area
-              dataKey="mobile"
-              type="natural"
-              fill="url(#abhayvashokan)"
-              fillOpacity={0.4}
-              stroke="hsl(var(--chart-1))"
-              stackId="a"
+            <YAxis />
+            {users.map((user, index) => (
+              <defs key={user.username}>
+                <linearGradient id={user.username} x1="0" y1="0" x2="0" y2="1">
+                  <stop
+                    offset="5%"
+                    stopColor={`hsl(var(--chart-${index + 1}))`}
+                    stopOpacity={0.8}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor={`hsl(var(--chart-${index + 1}))`}
+                    stopOpacity={0.1}
+                  />
+                </linearGradient>
+              </defs>
+            ))}
+            {users.map((user, index) => (
+              <Area
+                key={user.username}
+                animationDuration={500}
+                dataKey={user.username}
+                type="monotone"
+                fill={`url(#${user.username})`}
+                fillOpacity={0.4}
+                stroke={`hsl(var(--chart-${index + 1}))`}
+              />
+            ))}
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent labelFormatter={formattedDate} />}
             />
-            {/* <Area */}
-            {/*   dataKey="desktop" */}
-            {/*   type="natural" */}
-            {/*   fill="url(#fillDesktop)" */}
-            {/*   fillOpacity={0.4} */}
-            {/*   stroke="var(--color-desktop)" */}
-            {/*   stackId="a" */}
-            {/* /> */}
+            <ChartLegend content={<ChartLegendContent />} />
           </AreaChart>
         </ChartContainer>
       </CardContent>
