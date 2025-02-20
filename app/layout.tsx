@@ -3,8 +3,11 @@ import { Inter, Style_Script } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import ThemeSwitcher from "@/components/theme/theme-switcher";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import NavBar from "./navbar";
+
+// Import global utils.
+import "@/lib/utils";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -31,7 +34,7 @@ const RootLayout = ({
     <>
       <html lang="en" suppressHydrationWarning>
         <head />
-        <body className={clsx(inter.className, "px-4 antialiased")}>
+        <body className={cn(inter.className, "px-4 antialiased")}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

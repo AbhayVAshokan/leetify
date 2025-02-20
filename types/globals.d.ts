@@ -1,0 +1,3 @@
+interface Date {
+  withoutTime: () => Date;
+}
