@@ -7,6 +7,7 @@ import { SCORE } from "@/lib/constants/score";
 import prisma from "@/lib/prisma";
 import { Problem } from "@prisma/client";
 import { SYNC_START_DATE } from "./constants";
+import { ScoreProgression } from "@/types/analytics";
 
 type ScoreType = Record<string, number>;
 type ScoreSummaryType = Record<string, ScoreType>;
@@ -20,7 +21,7 @@ const buildUserData = (problems: Problem[]) =>
     return { ...data, [date]: prevScore + score };
   }, {});
 
-export const fetchScoreProgression = async () => {
+export const fetchScoreProgression = async (): Promise<ScoreProgression[]> => {
   const users = await prisma.user.findMany({
     include: { problems: { orderBy: { submittedAt: "asc" } } },
   });
@@ -39,7 +40,7 @@ export const fetchScoreProgression = async () => {
 
   while (currDate.withoutTime() <= new Date().withoutTime()) {
     const date = currDate.withoutTime().toISOString();
-    const dataForCurrDate: Record<string, number | string> = { date };
+    const dataForCurrDate: ScoreProgression = { date };
 
     users.forEach((user) => {
       cumulativeScore[user.username] += scores[user.username][date] ?? 0;
