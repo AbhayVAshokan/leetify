@@ -42,7 +42,6 @@ export const toggleFavorite = async ({
     });
     revalidatePath(`/${username}`);
     revalidatePath("/favorites");
-    revalidatePath("/analytics");
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       return Response.json("Problem not found for the user", { status: 404 });
@@ -61,6 +60,7 @@ export const syncWithLeetCode = async () => {
     await Promise.all(syncPromises);
 
     revalidatePath("/[username]", "page");
+    revalidatePath("/analytics");
     return { success: true, error: null };
   } catch (error) {
     console.error(error);
