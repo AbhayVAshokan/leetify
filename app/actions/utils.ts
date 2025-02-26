@@ -1,6 +1,6 @@
 "use server";
 
-import { User } from "@prisma/client";
+import { Topic, User } from "@prisma/client";
 import {
   LEET_CODE_HEADERS,
   LEET_CODE_GRAPH_URL,
@@ -57,6 +57,7 @@ export const fetchSubmissionsAndSyncWithDB = async (user: User) => {
   const submissionPromises = filteredSubmissions.map(async (submission) => {
     const data = await fetchProblemDetails(submission.titleSlug);
     const difficulty = data.data.question.difficulty;
+    const topics = data.data.question.topicTags;
 
     await prisma.problem.upsert({
       where: {
@@ -71,6 +72,12 @@ export const fetchSubmissionsAndSyncWithDB = async (user: User) => {
         difficulty,
         userId: user.id,
         submittedAt: new Date(submission.timestamp * 1000),
+        topics: {
+          connectOrCreate: topics.map((topic: Topic) => ({
+            where: { slug: topic.slug },
+            create: topic,
+          })),
+        },
       },
       update: {},
     });
