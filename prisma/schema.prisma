@@ -18,6 +18,7 @@ model Problem {
   userId      String
   createdAt   DateTime @default(now())
   submittedAt DateTime
+  topics      Topic[]
 
   @@unique([title, userId], name: "uniqueUserProblem")
   @@map(name: "problems")
@@ -32,4 +33,13 @@ model User {
   problems  Problem[]
 
   @@map(name: "users")
+}
+
+model Topic {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  slug     String    @unique
+  problems Problem[]
+
+  @@map(name: "topics")
 }
