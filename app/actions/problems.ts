@@ -67,7 +67,7 @@ export const syncWithLeetCode = async () => {
 export const fetchFavoriteProblems = async (): Promise<FavoriteProblem[]> => {
   const problems = await prisma.problem.findMany({
     where: { isFavorite: true },
-    include: { user: true },
+    include: { user: true, topics: true },
     orderBy: { submittedAt: "desc" },
   });
 
@@ -80,7 +80,10 @@ export const fetchFavoriteProblems = async (): Promise<FavoriteProblem[]> => {
               ? { ...prevProblem, users: [problem.user, ...favProblem.users] }
               : prevProblem,
           )
-        : [...summary, { ...problem, users: [problem.user] }];
+        : [
+            ...summary,
+            { ...problem, users: [problem.user], topics: problem.topics },
+          ];
     },
     [],
   );
