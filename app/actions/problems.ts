@@ -1,27 +1,23 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Problem } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { revalidatePath } from "next/cache";
 import { fetchSubmissionsAndSyncWithDB } from "./utils";
-import { FavoriteProblem } from "@/types/problem";
+import { FavoriteProblem, ProblemWithTopics } from "@/types/problem";
 
 export const fetchProblems = async ({
   username,
 }: {
   username: string;
-}): Promise<Problem[]> => {
-  const user = await prisma.user.findFirst({
-    where: {
-      username: {
-        equals: username,
-        mode: "insensitive",
-      },
-    },
-    include: { problems: { orderBy: { submittedAt: "desc" } } },
+}): Promise<ProblemWithTopics[]> => {
+  const problems = await prisma.problem.findMany({
+    where: { user: { username: { equals: username, mode: "insensitive" } } },
+    orderBy: { submittedAt: "desc" },
+    include: { topics: true },
   });
-  return user?.problems ?? [];
+
+  return problems.map((problem) => ({ ...problem, topics: problem.topics }));
 };
 
 export const toggleFavorite = async ({
@@ -71,7 +67,7 @@ export const syncWithLeetCode = async () => {
 export const fetchFavoriteProblems = async (): Promise<FavoriteProblem[]> => {
   const problems = await prisma.problem.findMany({
     where: { isFavorite: true },
-    include: { user: true },
+    include: { user: true, topics: true },
     orderBy: { submittedAt: "desc" },
   });
 
@@ -84,7 +80,10 @@ export const fetchFavoriteProblems = async (): Promise<FavoriteProblem[]> => {
               ? { ...prevProblem, users: [problem.user, ...favProblem.users] }
               : prevProblem,
           )
-        : [...summary, { ...problem, users: [problem.user] }];
+        : [
+            ...summary,
+            { ...problem, users: [problem.user], topics: problem.topics },
+          ];
     },
     [],
   );

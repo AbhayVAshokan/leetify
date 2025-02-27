@@ -7,7 +7,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Problem, User } from "@prisma/client";
+import { User } from "@prisma/client";
 
 import {
   Table,
@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Pagination from "@/components/ui/table/pagination";
 import ColumnToggle from "@/components/ui/table/column-toggle";
+import { ProblemWithTopics } from "@/types/problem";
 
 import UserSelect from "./user-select";
 import { buildColumns } from "./utils";
@@ -29,7 +30,7 @@ import { syncWithLeetCode, toggleFavorite } from "../actions/problems";
 import Streak from "./streak";
 
 interface DataTableProps<> {
-  problems: Problem[];
+  problems: ProblemWithTopics[];
   users: User[];
   username: string;
   streakData: {

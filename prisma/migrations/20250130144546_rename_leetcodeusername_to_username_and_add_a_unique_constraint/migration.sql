@@ -10,4 +10,4 @@
 ALTER TABLE "users" RENAME COLUMN "leetCodeUserName" to "username";
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_username_key" ON "users" (LOWER("username"));
+CREATE UNIQUE INDEX "users_username_key" ON "users"("username");

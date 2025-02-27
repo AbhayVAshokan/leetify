@@ -26,6 +26,10 @@ export const PROBLEM_DETAILS_QUERY = `#graphql
 query selectProblem($titleSlug: String!) {
     question(titleSlug: $titleSlug) {
         difficulty
+        topicTags {
+            name
+            slug
+        }
     }
 }`;
 

@@ -5,12 +5,13 @@ import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { Star } from "lucide-react";
 import Link from "next/link";
-import { Problem } from "@prisma/client";
 import { SCORE } from "@/lib/constants/score";
+import { Badge } from "@/components/ui/badge";
+import { ProblemWithTopics } from "@/types/problem";
 
 export const buildColumns = (
   onToggleFavorite: (props: { problemId: string; isFavorite: boolean }) => void,
-): ColumnDef<Problem>[] => [
+): ColumnDef<ProblemWithTopics>[] => [
   {
     accessorKey: "isFavorite",
     header: ({ column }) => <ColumnHeader column={column} title="" />,
@@ -46,6 +47,26 @@ export const buildColumns = (
         {row.getValue("title")}
       </Link>
     ),
+  },
+  {
+    accessorKey: "topics",
+    header: ({ column }) => <ColumnHeader column={column} title="Topcs" />,
+    cell: ({ row }) => {
+      const topics = row.original.topics.sort((topic1, topic2) =>
+        topic1.name.localeCompare(topic2.name),
+      );
+
+      return (
+        <div className="flex min-w-52 max-w-full flex-wrap gap-1">
+          {topics.map((topic) => (
+            <Badge key={topic.id} variant="outline">
+              {topic.name}
+            </Badge>
+          ))}
+        </div>
+      );
+    },
+    enableSorting: false,
   },
   {
     accessorKey: "difficulty",
