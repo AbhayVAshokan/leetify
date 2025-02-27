@@ -50,7 +50,7 @@ export const buildColumns = (
   },
   {
     accessorKey: "topics",
-    header: ({ column }) => <ColumnHeader column={column} title="Topcs" />,
+    header: ({ column }) => <ColumnHeader column={column} title="Topics" />,
     cell: ({ row }) => {
       const topics = row.original.topics.sort((topic1, topic2) =>
         topic1.name.localeCompare(topic2.name),
