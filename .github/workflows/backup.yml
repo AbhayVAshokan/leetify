@@ -3,7 +3,7 @@ name: Backup DB
 on:
   schedule:
     # NOTE: This has been updated to every 5 minutes to verify the GitHub action run.
-    - cron: "5 * * * *"
+    - cron: "*/5 * * * *"
 
 jobs:
   backup:
