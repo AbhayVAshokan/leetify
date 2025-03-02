@@ -2,7 +2,8 @@ name: Backup DB
 
 on:
   schedule:
-    - cron: "* * * * *"
+    # Everyday at 18:30 UTC (Midnight in Asia/Kolkata timezone)
+    - cron: "30 18 * * *"
 
 jobs:
   backup:
