@@ -2,8 +2,8 @@ name: Backup DB
 
 on:
   schedule:
-    # Everyday at midnight
-    - cron: "0 0 * * *"
+    # NOTE: This has been updated to every 5 minutes to verify the GitHub action run.
+    - cron: "5 * * * *"
 
 jobs:
   backup:
