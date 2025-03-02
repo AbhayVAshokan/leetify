@@ -1,0 +1,23 @@
+name: Backup DB
+
+on:
+  schedule:
+    # Everyday at midnight
+    - cron: "0 0 * * *"
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: curl --request POST "${{ secrets.BASE_URL }}/api/backup"
+      - run: |
+        git config --local user.email "abhayvashokan@gmail.com"
+        git config --local user.name "Abhay V Ashokan"
+        git add -A
+        if [[ -n $(git status --porcelain) ]]; then
+            git commit -m "Backup $(date +%F)"
+            git push
+        fi
