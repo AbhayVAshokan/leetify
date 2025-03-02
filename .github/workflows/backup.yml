@@ -15,6 +15,7 @@ jobs:
       - run: |
           git config --local user.email "abhayvashokan@gmail.com"
           git config --local user.name "Abhay V Ashokan"
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           git add -A
           if [[ -n $(git status --porcelain) ]]; then
               git commit -m "Backup $(date +%F)"
