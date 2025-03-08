@@ -19,8 +19,8 @@
 ## Deployment
 
 - The project is deployed on [Render](https://render.com)'s Hobby plan (free)
-  with the [Supabase](https://supabase.com) free plan. The project can be
-  deployed on any platform supporting the deployment of Next.js projects.
+  with the [Supabase](https://supabase.com) free plan. It can be deployed on
+  any platform of your choice.
 - Please follow the following steps if you need to deploy the project on your
   own:
   1. Fork the repository. This step is optional. Fork the repository if you
@@ -61,7 +61,7 @@
   deployed. For example, the `BASE_URL` for this project is set to
   `https://leetify.onrender.com`.
 
-## Automatic database backups
+## Automatic database backups (every midnight)
 
 - The [Backup DB](https://github.com/AbhayVAshokan/leetify/blob/f64509b33c33894f448a20c5b9db3ae8aadc15b5/.github/workflows/backup.yml)
   GitHub workflow runs every midnight to back up your database as a Gzip.
