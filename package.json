@@ -10,7 +10,8 @@
     "prepare": "bun run prepare:husky && bun run db:generate",
     "prepare:husky": "husky",
     "db:migrate": "prisma migrate dev",
-    "db:generate": "prisma generate"
+    "db:generate": "prisma generate",
+    "db:deploy": "prisma migrate deploy"
   },
   "lint-staged": {
     "{app,components}/**/*.{html,md,js,css,jsx,ts,tsx,json,yml}": [
