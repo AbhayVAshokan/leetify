@@ -3,7 +3,7 @@ name: Sync problems
 on:
   schedule:
     # Every hour between 8:30AM and 1:30AM IST.
-    - cron: "0 3-20 * * *"
+    - cron: "25 3-20 * * *"
 
 jobs:
   sync:

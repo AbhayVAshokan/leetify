@@ -71,7 +71,7 @@ export const fetchSubmissionsAndSyncWithDB = async (user: User) => {
         url: `https://leetcode.com/problems/${submission.titleSlug}`,
         difficulty,
         userId: user.id,
-        submittedAt: new Date(submission.timestamp * 1000),
+        submittedAt: new Date(),
         topics: {
           connectOrCreate: topics.map((topic: Topic) => ({
             where: { slug: topic.slug },
