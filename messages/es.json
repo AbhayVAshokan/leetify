@@ -1,0 +1,32 @@
+{
+  "Navbar": {
+    "home": "Inicio",
+    "analytics": "Analíticas",
+    "favorites": "Favoritos"
+  },
+  "Home": {
+    "title": "Leetify",
+    "description": "Analiza tu rendimiento en LeetCode"
+  },
+  "UserPage": {
+    "sync": "Sincronizar con LeetCode",
+    "noProblems": "No hay problemas para mostrar.",
+    "columns": {
+      "title": "Título",
+      "topics": "Temas",
+      "difficulty": "Dificultad",
+      "date": "Fecha"
+    }
+  },
+  "FavoritesPage": {
+    "columns": {
+      "users": "Usuarios"
+    }
+  },
+  "AnalyticsPage": {
+    "scoreProgression": {
+      "title": "Progresión de la puntuación a lo largo del tiempo",
+      "description": "Visualización de cómo cambiaron las puntuaciones de los usuarios a lo largo del tiempo."
+    }
+  }
+}

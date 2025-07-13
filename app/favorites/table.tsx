@@ -20,9 +20,10 @@ import {
 } from "@/components/ui/table";
 import Pagination from "@/components/ui/table/pagination";
 import ColumnToggle from "@/components/ui/table/column-toggle";
-import { columns } from "./utils";
+import { getColumns } from "./utils";
 import { useMemo, useState } from "react";
 import UserSelect from "./user-select";
+import { useTranslations } from "next-intl";
 
 interface DataTableProps {
   problems: FavoriteProblem[];
@@ -30,6 +31,8 @@ interface DataTableProps {
 }
 
 const DataTable = ({ problems, users }: DataTableProps) => {
+  const t = useTranslations("UserPage");
+  const columns = getColumns(t);
   const [selectedUsers, setSelectedUsers] = useState(users);
 
   const filteredProblems = useMemo(
@@ -113,7 +116,7 @@ const DataTable = ({ problems, users }: DataTableProps) => {
                     colSpan={columns.length}
                     className="h-24 items-center justify-center space-y-2 text-center"
                   >
-                    <p>There are no problems to show.</p>
+                    <p>{t("noProblems")}</p>
                   </TableCell>
                 </TableRow>
               )}

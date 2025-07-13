@@ -11,6 +11,7 @@ import { ProblemWithTopics } from "@/types/problem";
 
 export const buildColumns = (
   onToggleFavorite: (props: { problemId: string; isFavorite: boolean }) => void,
+  t: (key: string) => string,
 ): ColumnDef<ProblemWithTopics>[] => [
   {
     accessorKey: "isFavorite",
@@ -37,7 +38,7 @@ export const buildColumns = (
   },
   {
     accessorKey: "title",
-    header: ({ column }) => <ColumnHeader column={column} title="Title" />,
+    header: ({ column }) => <ColumnHeader column={column} title={t("columns.title")} />,
     cell: ({ row }) => (
       <Link
         target="_blank"
@@ -50,7 +51,7 @@ export const buildColumns = (
   },
   {
     accessorKey: "topics",
-    header: ({ column }) => <ColumnHeader column={column} title="Topics" />,
+    header: ({ column }) => <ColumnHeader column={column} title={t("columns.topics")} />,
     cell: ({ row }) => {
       const topics = row.original.topics.sort((topic1, topic2) =>
         topic1.name.localeCompare(topic2.name),
@@ -70,7 +71,7 @@ export const buildColumns = (
   },
   {
     accessorKey: "difficulty",
-    header: ({ column }) => <ColumnHeader column={column} title="Difficulty" />,
+    header: ({ column }) => <ColumnHeader column={column} title={t("columns.difficulty")} />,
     sortingFn: (rowA, rowB) => {
       // Sort difficulty as "easy" => "medium" => "hard".
       // @ts-expect-error: these type errors can be safely ignored since any
@@ -83,7 +84,7 @@ export const buildColumns = (
   },
   {
     accessorKey: "submittedAt",
-    header: ({ column }) => <ColumnHeader column={column} title="Date" />,
+    header: ({ column }) => <ColumnHeader column={column} title={t("columns.date")} />,
     cell: ({ row }) => (
       <p className="w-24">
         {new Date(row.getValue("submittedAt")).toLocaleDateString("en-US", {

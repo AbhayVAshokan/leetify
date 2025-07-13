@@ -28,6 +28,7 @@ import { cn } from "@/lib/utils";
 import { useOptimistic, useTransition } from "react";
 import { syncWithLeetCode, toggleFavorite } from "../actions/problems";
 import Streak from "./streak";
+import { useTranslations } from "next-intl";
 
 interface DataTableProps<> {
   problems: ProblemWithTopics[];
@@ -45,6 +46,7 @@ const DataTable = ({
   username,
   streakData,
 }: DataTableProps) => {
+  const t = useTranslations("UserPage");
   const [, startTransition] = useTransition();
   const [isSyncPending, startSyncTransition] = useTransition();
 
@@ -86,7 +88,7 @@ const DataTable = ({
     });
   };
 
-  const columns = buildColumns(handleToggleFavorite);
+  const columns = buildColumns(handleToggleFavorite, t);
 
   const table = useReactTable({
     data: optimisticProblems,
@@ -109,7 +111,7 @@ const DataTable = ({
           variant="secondary"
           size="sm"
         >
-          Sync with LeetCode
+          {t("sync")}
         </Button>
         <div className="flex gap-2">
           <Streak data={streakData} />
@@ -165,7 +167,7 @@ const DataTable = ({
                     colSpan={columns.length}
                     className="h-24 items-center justify-center space-y-2 text-center"
                   >
-                    <p>There are no problems to show.</p>
+                    <p>{t("noProblems")}</p>
                   </TableCell>
                 </TableRow>
               )}

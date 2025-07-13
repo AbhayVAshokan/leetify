@@ -19,6 +19,7 @@ import { ScoreProgression as ScoreProgressionType } from "@/types/analytics";
 import { buildChartConfig, formattedDate } from "./utils";
 import { User } from "@prisma/client";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 interface ScoreProgressionProps {
   users: User[];
@@ -26,15 +27,14 @@ interface ScoreProgressionProps {
 }
 
 const ScoreProgression = ({ users, data }: ScoreProgressionProps) => {
+  const t = useTranslations("AnalyticsPage.scoreProgression");
   const chartConfig = buildChartConfig(users) satisfies ChartConfig;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Score progression over time</CardTitle>
-        <CardDescription>
-          Visualizing how user scores changed over time.
-        </CardDescription>
+        <CardTitle>{t("title")}</CardTitle>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

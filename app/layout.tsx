@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Style_Script } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme/theme-provider";
 import ThemeSwitcher from "@/components/theme/theme-switcher";
 import { cn } from "@/lib/utils";
 import NavBar from "./navbar";
+import {getMessages} from 'next-intl/server';
+import { Providers } from "./providers";
 
 // Import global utils.
 import "@/lib/utils";
@@ -25,22 +26,21 @@ export const metadata: Metadata = {
   description: "Gamify LeetCode",
 };
 
-const RootLayout = ({
+const RootLayout = async ({
   children,
+  params: {locale}
 }: Readonly<{
   children: React.ReactNode;
+  params: {locale: string};
 }>) => {
+  const messages = await getMessages();
+
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
+      <html lang={locale} suppressHydrationWarning>
         <head />
         <body className={cn(inter.className, "px-4 antialiased")}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <Providers locale={locale} messages={messages}>
             <header className="container m-auto flex items-center justify-between py-4 text-center text-4xl">
               {/*TODO: Instead of hiding logo in small-screens, implement an hamburger menu for the navlinks.*/}
               <h1 className={cn("hidden sm:inline", styleScript.className)}>
@@ -50,7 +50,7 @@ const RootLayout = ({
               <ThemeSwitcher />
             </header>
             {children}
-          </ThemeProvider>
+          </Providers>
         </body>
       </html>
     </>

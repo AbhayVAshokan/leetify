@@ -8,10 +8,20 @@ import { ColumnDef } from "@tanstack/react-table";
 import { FavoriteProblem } from "@/types/problem";
 import { Badge } from "@/components/ui/badge";
 
-export const columns: ColumnDef<FavoriteProblem>[] = [
+import { buttonVariants } from "@/components/ui/button";
+import ColumnHeader from "@/components/ui/table/column-header";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { SCORE } from "@/lib/constants/score";
+import { ColumnDef } from "@tanstack/react-table";
+import { FavoriteProblem } from "@/types/problem";
+import { Badge } from "@/components/ui/badge";
+
+export const getColumns = (t: (key: string) => string): ColumnDef<FavoriteProblem>[] => [
   {
     accessorKey: "title",
-    header: ({ column }) => <ColumnHeader column={column} title="Title" />,
+    header: ({ column }) => <ColumnHeader column={column} title={t("UserPage.columns.title")} />,
     cell: ({ row }) => (
       <Link
         target="_blank"
@@ -24,7 +34,7 @@ export const columns: ColumnDef<FavoriteProblem>[] = [
   },
   {
     accessorKey: "topics",
-    header: ({ column }) => <ColumnHeader column={column} title="Topics" />,
+    header: ({ column }) => <ColumnHeader column={column} title={t("UserPage.columns.topics")} />,
     cell: ({ row }) => {
       const topics = row.original.topics.sort((topic1, topic2) =>
         topic1.name.localeCompare(topic2.name),
@@ -44,7 +54,7 @@ export const columns: ColumnDef<FavoriteProblem>[] = [
   },
   {
     accessorKey: "difficulty",
-    header: ({ column }) => <ColumnHeader column={column} title="Difficulty" />,
+    header: ({ column }) => <ColumnHeader column={column} title={t("UserPage.columns.difficulty")} />,
     sortingFn: (rowA, rowB) => {
       // Sort difficulty as "easy" => "medium" => "hard".
       // @ts-expect-error: these type errors can be safely ignored since any
@@ -57,7 +67,7 @@ export const columns: ColumnDef<FavoriteProblem>[] = [
   },
   {
     accessorKey: "users",
-    header: ({ column }) => <ColumnHeader column={column} title="Users" />,
+    header: ({ column }) => <ColumnHeader column={column} title={t("FavoritesPage.columns.users")} />,
     sortingFn: (rowA, rowB) =>
       rowA.original.users.length - rowB.original.users.length,
     cell: ({ row }) => (
