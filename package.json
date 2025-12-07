@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "prepare": "bun run prepare:husky && bun run db:generate",
     "prepare:husky": "husky",
     "db:migrate": "prisma migrate dev",
@@ -37,12 +37,12 @@
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
     "lucide-react": "^0.475.0",
-    "next": "15.1.4",
+    "next": "16.0.7",
     "next-themes": "^0.4.4",
     "postcss": "^8",
     "prisma": "^6.2.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
     "recharts": "^2.15.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss": "^3.4.1",
@@ -50,17 +50,20 @@
     "typescript": "^5"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
     "eslint": "^9",
-    "eslint-config-next": "15.1.4",
+    "eslint-config-next": "16.0.7",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9"
+  },
+  "overrides": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3"
   }
 }

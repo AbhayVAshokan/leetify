@@ -29,7 +29,7 @@ import { useOptimistic, useTransition } from "react";
 import { syncWithLeetCode, toggleFavorite } from "../actions/problems";
 import Streak from "./streak";
 
-interface DataTableProps<> {
+interface DataTableProps {
   problems: ProblemWithTopics[];
   users: User[];
   username: string;
